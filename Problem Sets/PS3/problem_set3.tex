@@ -1,0 +1,447 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{lipsum}
+\usepackage{parskip}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb} 
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{enumitem}
+\title{CSC165H1: Problem Set 3}
+\author{Michael Zhou}
+\date{2023-03-13}
+
+\newcounter{qcount}
+\newcommand\q{\stepcounter{qcount} \textbf{Question \theqcount}. }
+\newcommand\qedsymbol{\hfill$\blacksquare$}              
+
+\begin{document}
+\maketitle
+\q \textbf{Number representation.}
+
+For all $n \in \mathbb{N}$ and $k \in \mathbb{Z}^+$, we define $C (n, k)$ 
+to be:
+$$\exists a_1, \ldots, a_k \in \mathbb{N}, (\forall i \in \mathbb{Z}^+, 
+1 \leq i \leq k \Rightarrow a_i \leq i) \land (n = \sum_{i=1}^{k} a_i 
+\cdot i!)$$
+Prove using induction that $\forall n \in \mathbb{N}, \forall k \in 
+\mathbb{Z}^+, n < (k+1)! \Rightarrow C (n, k)$.
+
+\textit{Proof.} We define the predicate $P (k):
+`` \forall n \in \mathbb{N}, n < (k +1 )! \Rightarrow C (n, k) "
+$, where $k \in \mathbb{Z}^+$. 
+
+\textbf{Base case.} Let $k = 1$. We want to prove $P(1)$. Let $n \in \mathbb{N}$. 
+Assume $n < 2!$. Since $k = 1$, we know $n = \sum_{i=1}^{1} a_i 
+\cdot i!$ = $a_1$. And $a_1$ can be either $1$ or $0$, and both cases will result in 
+$n< 2$. Thus the base case is True for $P(1)$.
+
+\textbf{Inductive step.} Let $x \in \mathbb{Z}^+$. Assume $P(x)$ is True, such that 
+$\forall n \in \mathbb{N}, n < (x + 1)! \Rightarrow C (n , x)$. We want to 
+prove that $P(x+1)$ is True, such that $\forall n \in \mathbb{N}, n < 
+(x + 2)! \Rightarrow C (n, x + 1)$. 
+
+Let $n \in \mathbb{N}$. Assume $n < (x + 2)!$. We want to prove that $
+C(n, x + 1) $. Since we know that $n < (x + 1)!$ or $n \geq (x + 1)!$, we 
+can divide the proof into two cases:
+
+\textbf{Case 1.} Assume $n < ( x + 1)!$.
+
+Then we know $C (n , x)$ is True by the induction hypothesis. So we know that
+$\exists a_1, \ldots, a_x \in \mathbb{N}, (\forall i \in \mathbb{Z}^+, 
+1 \leq i \leq x \Rightarrow a_i \leq i)$, and $n = \sum_{i=1}^{x} a_i \cdot 
+i!$. In other words, $a_1, \ldots, a_k$ satisfy $n = \sum_{i=1}^{x} a_i \cdot 
+i!$. 
+
+Let $a'_1 = a_1, a'_2 = a_2, \ldots, a'_x = a_x, a'_ {x + 1} = 0$. Then 
+we have 
+\begin{align*}
+    n  &= a_1 \cdot 1! + a_2 \cdot 2! + \ldots + a_x \cdot x! + 0 \cdot (x+1)!\\
+       &= a'_1 \cdot 1! + a'_2 \cdot 2! + \ldots + a'_x \cdot x! + a'_ {x+1} 
+       \cdot (x+1)!\\
+     &= \sum_{i=1}^{x+1} a_i \cdot i!
+\end{align*}
+We know that $a'_ {x+1} = 0$ satisfies the first part of the predicate 
+since $0 < i$ for all positive integers $i$.
+So $C (n, x + 1)$ is True for $n < (x + 1)!$.
+
+\textbf{Case 2.} Assume $n \geq (x + 1)!$.
+
+By the assumptions of the statement we want to prove, 
+we know that $n$ can be represented using the Quotient Remainder Theorem: 
+$\exists q, r \in \mathbb{Z}$ such that all $n$ between $(x+1)! \leq n < 
+(x+2)!$ can be written as $q (x+1)! + r$. We know that $0 \leq r < (x+1)!$ by the 
+definition of theorem, so $r$ can already be represented by $P(x)$ using 
+the proof in Case 1 such that there exists $a_1, \ldots, a_x$ that satisfy 
+$r = \sum_{i=1}^{x} a_i \cdot i!$.
+\newpage
+We also know that in order for $n$ to be less than $(x+2)!$, 
+$q$ has to be less than $(x+2)$, or in other words, $q \leq (x+1)$. Let 
+$q = a_ {x+1}$, then we get 
+\begin{align*}
+    n = q \cdot (x+1)! + r \\
+    n = a_ {x+1}\cdot (x+1)! + \sum_{i=1}^{x} a_i \cdot i!\\
+    n = \sum_{i=1}^{x+1} a_i \cdot i! 
+\end{align*}
+We know that $a_ {x+1} = q$ satisfies the first part of the statement 
+since $q \leq (x+1)$. 
+
+So $C (n , x+1)$ is True
+by the assumption of $n < (x+2)!$. 
+
+Thus $P(x+1)$ is True
+by the assumption of $P(x)$, so we have proven the predicate $P(k): 
+`` \forall n \in \mathbb{N}, n < (k+1)! \Rightarrow C (n, k)"$ where 
+$k \in \mathbb{Z}^+$ by induction. 
+
+\qedsymbol
+
+\newpage
+\q \textbf{Induction.}
+
+For all $m, n \in \mathbb{N}$, let $A_m = \{ a \mid a \in \mathbb{N} \land 
+a \leq m \} $ and $B_n = \{ b \mid b \in \mathbb{N} \land b \leq n \}$, 
+and define $F_{m, n }$ to be:
+$$\{ f : A_m \rightarrow B_n \mid [ \forall k, l \in A_m, k \leq l 
+\Rightarrow f ( k) \leq f (l) ] \land f (m) = n  \}$$
+For all $m, n \in \mathbb{N}$, define $P (m, n)$ to be:
+$$ | F_ {m, n} | = \frac{ (m + n)!}{m! \cdot n!}$$
+\begin{enumerate}[label = (\alph*)]
+    \item Prove each following statement.
+        \begin{enumerate}[label = (\roman*)]
+            \item $\forall m \in \mathbb{N}, P (m, 0)$. 
+
+                \textit{Proof.} Let $m \in \mathbb{N}$. We want to prove 
+                that $P (m, 0)$ is True. 
+
+                Since the codomain is a set that contains only 0, the size 
+                of $F_ {m, n}$ would only be 1, since the only function that 
+                would satisfy the conditions would be the one that mapped 
+                all $m$ to 0. It would look like a horizontal line at 
+                the origin, since $f(0), \ldots, f(m)$ must all be 
+                natural numbers less than 
+                or equal to 0.
+                \begin{align*}
+                    LHS &= |F_ {m, n}|\\ 
+                        &= 1 \\
+                    RHS &= \frac{ (m + 0)!}{m! \cdot 0!} \\
+                      &= \frac{m!}{m!} \\
+                      &= 1 \\
+                    LHS &= RHS = 1
+                \end{align*}
+                Thus we have proven both sides of $P (m, 0)$ are equal, 
+                so the statement is True for all $m \in \mathbb{N}$. 
+                
+                \qedsymbol
+            \item $\forall n \in \mathbb{N}, P (0, n)$. 
+
+                \textit{Proof.} Let $n \in \mathbb{N}$. We want to prove 
+                that $P(0, n)$ is True. 
+                
+                Since the domain is a set that only contains 0, we would have 
+                one function in $F_ {m, n}$ since $A_m = \{0\}$. The function 
+                would only have $f (0) = n$.
+                \begin{align*} 
+                    LHS &= |F_ {m, n}| \\
+                        &= 1 \\
+                    RHS &= \frac{ (0 + n)!}{0! \cdot n!} \\
+                        &= \frac{n!}{n!} \\
+                        &= 1 \\
+                    LHS &= RHS = 1
+                \end{align*}
+                Thus we have proven both sides of $P (0, n)$ are True, 
+                so the statement is True for all $n \in \mathbb{N}$.
+
+                \qedsymbol
+                \newpage
+            \item $\forall m, n \in \mathbb{N}, P (m, n+1) \land 
+                P (m + 1, n) \Rightarrow P (m + 1, n + 1)$.
+
+                \textit{Proof.} Let $m , n \in \mathbb{N}$. Assume 
+                $P ( m , n + 1) \land P(m+1, n)$. We want to show that 
+            $P (m +1, n+1)$, such that $| F_ {m + 1, n + 1}| = 
+            \frac{ (m + n + 2)!}{ (m + 1)! (n + 1)!}$. 
+
+                We know every function in $F_ {m , n +1}$ has $f (m) = n + 1$. 
+                To convert these functions to members of $F_ {m + 1, n + 1}$, 
+                we would have to add the assignment $f ( m + 1) = n + 1$. These 
+                functions would include all cases where $f (m) = n + 1$. 
+                
+                We need to also do this for $F_ {m + 1, n}$, 
+                and make $f (m + 1) = n +1$ for all of these functions. This new 
+                set would have all cases where $f ( m) \leq n$.
+
+                We are not introducing any new functions into these sets, 
+                but instead modifying the existing functions so $f (m + 1) 
+                = n+1$. These functions would all satisfy the statement 
+                by the hypothesis.
+
+                There would not 
+                be any overlaps since the $F_ {m, n+1}$ set includes of all 
+                cases where $f (m )= n + 1$ and the $F_ {m+1, n}$ group takes care 
+                of all cases where $ f (m) \leq n$. 
+
+                The cardinality 
+                of $F_ {m + 1, n+ 1}$ would be the total amount of functions that 
+                that can have their final term be $f (m+1) = n+1$, such
+                that $f (m) \leq n +1$, which means the union of $F_ {m, n +1}$ and 
+            $ F_ {m+1, n}$ would cover all cases where $f (m) \leq n +1$ and $f
+            (m +1) = n +1$.
+
+                In other words, $|F_ {m +
+                1, n + 1}| = |F_{m, n+1}| + |F_ {m +1, n}|$.
+                
+                 Substituting into the equation, we have 
+                \begin{align*}
+                    LHS &= |F_ {m+1, n+1}| \\
+                        &= \frac{ ( m + n + 2)!}{ (m + 1)! (n + 1)} \tag*{(By 
+                        definition of $P(m, n)$)} \\
+                    RHS &= |F_ {m, n + 1}| + |F _ {m + 1, n}| \\
+                        &= \frac{ (m + n + 1)!}{m! (n+1)!} + \frac{
+                        (m + n +1)!}{ (m + 1)! n!} \tag*{ (By assumption)} \\
+                        &= \frac{ (m + n + 1)! (m +1)}{ (m + 1)! (n +1)!} + 
+                        \frac{ (m + n +1)! (n + 1)}{ (m + 1)! (n + 1)!} \\
+                        &= \frac{ (m + n + 1)! ( (m + 1) + (n + 1))}{ 
+                        ( m + 1)! (n + 1)!} \\
+                        &= \frac{ ( m + n + 1)! ( m + n + 2)}{ (m + 1)! (n + 1)!} \\
+                        &= \frac{ (m + n + 2)!}{ (m + 1)! (n + 1)!} \\
+                    LHS &= RHS
+                \end{align*}
+                Both sides are equal assuming $P (m, n +1)$ and $P ( m + 1, n)$, 
+                thus $P (m + 1, n + 1)$ is True.
+                
+                \qedsymbol
+        \end{enumerate}
+    \newpage
+    \item Prove, using results from part (a), that $P (1,1) \land P (2,2)$.
+        
+        \textit{Proof.} We want to prove $P (1, 1) \land P (2, 2)$. 
+        Let $m, n \in \mathbb{N}$. By part (a), we know that $P(0, n)$ 
+        and $P (m, 0)$ are both True. If we let $m = 1$ and $n = 1$, 
+        then $P(0, 1)$ and $P (1, 0)$ are both True. Similarly for 
+        $P (0, 2)$ and $P (2, 0)$.
+
+        By part (a), we know 
+        that if $P(m, n+1) \land P(m+1, n)$, then $ P (m +1. n+1)$ would 
+        be also be True. If we let $m = 0$ and $n = 0$, we get 
+        $P (0, 1) \land P (1, 0)$, which we know are both True, then we know 
+        that $P (1, 1)$ is also True. 
+
+        We can also do the same for 
+        $P (2, 0)$ and $P (1, 1)$ by letting $m = 1$ and $n = 0$ and proving 
+        $P (2, 1)$. And the same goes for $P (0, 2)$ and $P (1, 1)$ by 
+        letting $m = 0$, $n = 1$, proving $P(1, 2)$. 
+
+        Finally, using $m = 1$ and $n = 1$, we have $ P (2, 1) 
+        \land (1, 2) \Rightarrow P(2, 2)$. 
+
+        Thus both $P (1, 1)$ and $P (2, 2)$ are True by the results 
+        from part (a).
+
+        \qedsymbol
+
+    \item For each $t \in \mathbb{N}$, define $Q (t)$ to be $\forall m, n 
+        \in \mathbb{N}, m + n = t \Rightarrow P (m ,n)$. Prove using induction 
+        and the results from part (a), that: $\forall t \in \mathbb{N}, 
+        Q(t)$ 
+
+        \textit{Proof.} Let $t \in \mathbb{N}$. We want to prove $Q (t)$
+        such that for all $m, n \in \mathbb{N}$ if $m + n = t$, then 
+        $P (m, n)$. 
+
+        \textbf{Base case.} Let $t = 0$. Assume that $t = m + n$. We want 
+        to show that $P(m, n)$ is True. Since $m, n$ are both natural 
+        numbers, they must both be 0 since $m + n = 0$. Then $P (0, 0)$ 
+        is True by the results in part (a).
+
+        \textbf{Inductive step.} Let $k \in \mathbb{N}$. Assume that 
+        $Q (k)$ is True such that $m_1 + n_1 = k \Rightarrow P(m_1, n_1)$. We 
+        want to prove that $Q (k+1)$ is True, such that $m_2 + n_2 = 
+        k + 1 \Rightarrow P (m_2, n_2)$. We will use a proof by cases.
+
+        We know that if $m_2 + n_2 = k + 1$, either $m_2 = m_1 + 1 \land 
+        n_2 = n_1$, or $m_2 = m_1 \land n_2 = n_1 + 1$. 
+        
+        \textbf{Case 1.} Assume $m_2 = m_1 + 1 \land n_2 = n_1$. 
+
+        Using the induction hypothesis, we have $P (m_1, n_1) = P (m_2 - 1, 
+        n_2)$. We also have $P (m_2, n_2 - 1)$ by rearranging 
+        $k = m_1 + n_1 = m_2 - 1 + n_2 = m_2 + n_2 - 1$. By part (a), 
+        we can conclude that since $ P (m_2 -1 , n_2) \land P (m_2, n_2 -1)$, 
+        that $P (m_2, n_2)$ is True in this case.
+
+        \textbf{Case 2.} Assume $m_2 = m_1 \land n_2 = n_1 + 1$.
+
+        Following the same procedure as Case 1, we have 
+        $P (m_1, n_1) = P (m_2, n_2 - 1 )$, and rearranging $k = m_2 + n_2 - 1$ 
+        we get $P ( m_2 -1, n_2)$. By part (a), we can conclude that 
+        that since $P (m_2 -1, n_2) \land P( m_2, n_2 -1)$, that 
+        $P (m_2, n_2)$ is also True in this case.
+
+        Thus we have proven that $P (m_2, n_2)$ is True in both cases
+        by the assumption that $m_2 + n_2 = k + 1$, such that $Q(k+1)$ is 
+        True by the assumption that $Q (k)$ is True. We have 
+        proven $Q (t)$ by induction.
+
+        \qedsymbol
+
+    \item Prove, using results form part (c), that: $\forall m, n \in \mathbb{N}, 
+        P (m, n)$.
+
+        \textit{Proof.} Let $m, n \in \mathbb{N}$. We want to prove 
+        that $P ( m , n)$. 
+
+        Let $t \in \mathbb{N}$. From part (c), we know that if $m + n = t$ 
+        then $P ( m, n)$ is True. 
+
+        If you add two natural numbers, the result will always be a 
+        natural number, so there will always be a natural number $t$ such 
+        that $m + n = t$. 
+
+        Thus, by part (c), $P (m, n)$ is True for any natural numbers 
+        $m, n$. 
+
+        \qedsymbol
+
+
+\end{enumerate}
+
+\newpage
+\q \textbf{Asymptotic notation.}
+\begin{enumerate}[label = (\alph*)]  
+    \item Prove or disprove that $n^n \in \mathcal{O} (n!)$.
+
+        \textit{Translation.} $\exists c, n_0 \in \mathbb{R}^+, 
+        \forall n \in \mathbb{N}, n \geq n_0 \Rightarrow n^n \leq 
+        c \cdot n!$
+
+        \textit{Proof.} 
+        Let $n \in \mathbb{N}$. 
+        We want to prove 
+        that $n^n \notin \mathcal{O} (n!)$. We will use a proof by contradiction. 
+            
+        Let $c, n_0$ be arbitrary positive real numbers. 
+        Assume that $n^n \in \mathcal{O} (n!)$, such that if $n \geq n_0 
+        $ then 
+        \begin{align*}
+            n^n &\leq c \cdot n! \\
+            \frac{n^n}{n!} &\leq c
+        \end{align*} 
+        Then there would exist a $c$ that is always greater than 
+        $\frac{n^n}{n!}$ by the assumption that $n^n \in \mathcal{O} (n!)$. 
+        
+        We know that $n^n$ is larger than $n!$ since if we line up 
+        all values, the values of $n^n$ are all greater than $n!$ after 
+        the first term, so the ratio grows to infinity:
+        \begin{align*}
+            n^n &= n \cdot n \cdot \ldots \cdot n \cdot n \tag*{($n$ terms)} \\
+            n! &= n \cdot (n - 1) \cdot \ldots \cdot 2 \cdot 1 \tag*{($n$ terms)}
+        \end{align*}
+        But we know that there does not exist a largest natural number, 
+        since the set is infinite. Thus, there cannot exist a $c$ that 
+        always satisfies this inequality, creating a contradiction.
+        
+        \qedsymbol
+        
+    \item Prove that if $a, b \in \mathbb{R}$ and $b > 0$, then 
+        $ (n + a)^b \in \Theta (n^b)$.
+
+        \textit{Proof.} Let $a, b \in \mathbb{R}$. Assume that 
+        $b > 0$. We want to prove that $ (n+a)^b \in \Theta (n^b)$. 
+        
+        Expanding on the definition of $\Theta (n^b)$, we have 
+        \begin{align*}
+            \exists c_1, c_2, n_0 \in \mathbb{R}^+, \forall n \in \mathbb{N}, 
+            n \geq n_0 \Rightarrow
+            c_1 n^b\leq (n + a)^b \leq c_2 n^b 
+        \end{align*}
+    Let $c_1 = (\frac{1}{2})^b$, $c_2 = (\frac{3}{2})^b$, $n_0 = 2 | a |$. Assume
+    $n \geq n_0$. We want to show that $ c_1 n^b \leq (n + a)^b \leq c_2 n^b$.
+    Solving for the left side we get 
+    \begin{align*}
+        (n+a)^b &= \left(\frac{n}{2} + \frac{n}{2} + a\right)^b  \\
+                &\geq \left(\frac{n}{2} + |a| + a \right) ^b \tag*{(Since $n > 2|a|$)}\\
+                &\geq \left( \frac{n}{2} \right)^b \tag*{(Since $|a| + a \geq 0$)} \\
+                &\geq \left(\frac{1}{2}\right)^b \cdot n^b \\
+                &\geq c_1 n^b
+    \end{align*}
+    Solving for the right side we get 
+    \begin{align*}
+        (n+a)^b &\leq \left(n + \frac{n}{2}\right)^b \tag*{(Since $ n \geq 2 |a|$)} \\
+                &\leq \left(\frac{3n}{2}\right)^b \\
+                &\leq \left(\frac{3}{2}\right)^b \cdot n^b \\
+                &\leq c_2 n^b 
+    \end{align*}
+    Thus we have proven $c_1 n^b \leq (n + a)^b \leq c_2 n^b$ assuming 
+    $n \geq n_0$ and $b > 0$. 
+
+    \qedsymbol
+
+\end{enumerate}
+
+\newpage
+\q \textbf{More asymptotic notation.}
+\begin{enumerate}[label = (\alph*)]
+    \item Prove or disprove that: if $f : \mathbb{N} \rightarrow \mathbb{R}^
+        {\geq 0}, k \in \mathbb{R}^+$ and $f (n) \in \mathcal{O} (n^k)$, then 
+        log$_2 (f (n)) \in \mathcal{O} (\log_2n)$.
+
+        \textit{Proof.} Let $k \in \mathbb{R}^+$. We want to show that 
+        if $f : \mathbb{N} \rightarrow \mathbb{R}^ {\geq 0}$ and 
+        $f (n) \in \mathcal{O} (n^k)$, then $\log_2 (f(n)) \in \mathcal{O}
+        (\log_2 n)$. Let $n_0$ be an arbitrary positive real number. Let 
+        $c = k + 1$. Let $n_0 = c$. Let $n \in \mathbb{N}$. Then 
+        by our assumption and the definition of Big-Oh, if $n \geq n_0$, we have 
+        \begin{align*}
+            f (n) &\in \mathcal{O} (n ^k) \\
+            f (n) &\leq c \cdot n^k  \\
+            \log_2 ( f (n)) &\leq \log_2 (c\cdot n^k) \\
+            \log_2 (f (n )) &\leq \log_2 (c) + \log_2 (n^k) \tag*{(Using log identity)} \\
+            \log_2 (f (n)) &\leq \log_2 (n) + \log_2 (n^k) \tag*{(Since $n \geq c$)} \\
+            \log_2 (f (n)) &\leq log_2(n) + k \cdot \log_2 (n) \\
+            \log_2 (f (n)) &\leq (k+1) \cdot \log_2 (n) \\
+            \log_2 (f (n)) &\leq c \cdot \log_2 (n) \\ 
+            \log_2 (f (n)) &\in \mathcal{O} (\log_2 (n))
+        \end{align*}
+        Thus we have proven the $\log_2 (f (n)) \in \mathcal{O} \log_2 n$ 
+        by the assumption that $f (n) \in \mathcal{O} (n^k)$. 
+
+        \qedsymbol
+
+    \item Prove that: if $f_1, f_2, g_1, g_2: \mathbb{N} \rightarrow \mathbb{R}^ {\geq 0}
+        , f_1 \in \mathcal{O} (g_1)$, and $f_2 \in \mathcal{O} (g_2)$, then 
+        $f_1 + f_2 \in \mathcal{O} (max (g_1, g_2))$. Here, $ (f_1 + f_2) (n)
+        = f_1 (n) + f_2 (n)$ and max$ (g_1, g_2) (n) =$ max$(g_1 (n), g_2 (n))$.
+        
+        \textit{Proof.} Assume that $f_1 , f_2, g_1, g_2: \mathbb{N} \rightarrow 
+        \mathbb{R}^ {\geq 0}$, $f_1 \in \mathcal{O} (g_1)$, and 
+        $f_2 \in \mathcal{O} (g_2)$. We want to show that 
+        $f_1 + f_2 \in \mathcal{O} (\text{max}(g_1, g_2))$. 
+
+        Using the definition of Big-Oh, we can express the hypothesis
+        as $\exists c_1, c_2 , n_1 , n_2\in \mathbb{R}^+, \forall n \in 
+        \mathbb{N}, (n \geq n_1 \Rightarrow f_1  \leq c_1 \cdot 
+        g_1) \land (n \geq n_2 \Rightarrow f_2 \leq c_2 \cdot 
+        g_2)$.
+            
+        Let $c_3 = c_1 + c_2$, let $n_3 = \text{max} (n_1, n_2)$. Then 
+        by our assumptions, we know that $f_1 \leq c_1 \cdot g_1$ and 
+        $f_2 \leq c_2 \cdot g_2$. Adding these together we have 
+        \begin{align*}
+            f_1 + f_2 &\leq c_1 \cdot g_1 + c_2 \cdot g_2 \\
+             f_1 + f_2&\leq c_1 \cdot \text{max} (g_1, g_2) + c_2 \cdot
+                \text{max} (g_1, g_2) \tag*{(max($g_1, g_2$) $\geq g_1$, same for $g_2$)}\\
+                 f_1 + f_2     &\leq (c_1 + c_2) \cdot \text{max}  (g_1, g_2) \\
+               f_1 + f_2       &\leq c_3\cdot \text{max} (g_1, g_2) \\
+               f_1 + f_2 &\in \mathcal{O} (\text{max} (g_1, g_2)) \tag*{($n \geq n_3$)}
+        \end{align*}
+        Thus we have proven $f_1 + f_2 \in \mathcal{O} (\text{max} (g_1, g_2))$ 
+    assuming that $f_1 \in \mathcal{O}(g_1)$ and $f_2 \in \mathcal{O} (g_2)$. 
+
+        \qedsymbol
+
+\end{enumerate}
+
+\end{document}

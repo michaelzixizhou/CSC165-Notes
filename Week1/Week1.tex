@@ -1,0 +1,504 @@
+\documentclass{article}
+\usepackage{marginnote}
+\usepackage[top=2.54cm, bottom=2.54cm, outer=8cm, inner=2.54cm, heightrounded, marginparwidth=4.46cm, marginparsep=1cm]{geometry}
+\usepackage{lipsum}
+\usepackage{parskip}
+\usepackage{amsfonts}
+\usepackage{marginfix} % floats sidenots
+\usepackage{sidenotes}
+\usepackage{amsmath}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{enumitem}
+\title{Week 1: Mathematical Expression}
+\author{Michael Zhou}
+\date{2022-12-28}
+
+
+
+\begin{document}
+\maketitle
+
+\section{Sets}
+
+\setlength{\parindent}{0pt}
+    
+
+\textbf{Definiton 1.1.} Sets are a collection of distinct \textbf{elements}, it can
+be finite or infinite. The size of a finite set \emph{A} is denoted by 
+$\mid\emph{A}\mid$.
+The \textbf{empty set} is denoted by $\emptyset$.
+
+\marginnote{$^{1}$ It is important to note that the hierarchy of cardinalities is
+$\#\mathbb{N} = \#\mathbb{Z} = \#\mathbb{Q} < \#\mathbb{R} = \#\mathbb{C}$.
+Don't ask me why yet...} 
+\textbf{Definiton 1.2.} The \textbf{cardinality} of a set is how many elements
+are in the set.$^{1}$
+
+\textbf{Examples}\\
+Finite sets \hfill $\{a, b, c, d\}$, $\{2, 4, 10, 11\}$ \\
+Set of tuples \hfill $\{(Ava Doe, \$ 700, 50), (Donald,\$ 670, 30\}$ 
+
+Infinite sets \\ 
+All natural numbers \hfill$\mathbb{N} = \{ 0, 1, 2, \ldots \} $ \\
+All integers \hfill$\mathbb{Z} = \{\ldots, 2, -1, 0, 1, 2, \ldots\} $ \\
+All positive integers \hfill$\mathbb{Z}^{+} = \{1, 2, \ldots\} $ \\
+All rational numbers \hfill $ \mathbb{Q} $ \\
+All real numbers \hfill $ \mathbb{R} $ \\
+All complex numbers \hfill $ \mathbb{C} $ 
+
+\marginnote{$^2$ Some definitions on binary operators and relations: \\
+$=$ \hfill equals \\
+$\in$ \hfill in \\ 
+$\notin$ \hfill not in\\
+$\subseteq$ \hfill subset \\
+$\cap$ \hfill intersection \\
+$\cup$ \hfill union \\ 
+$\setminus$ \hfill set difference \\ 
+$\times$ \hfill Cartesian product \\
+$\mathcal{P}(\mathbb{A})$ \hfill power set}
+
+A string of length 0 is called the \emph{empty string} and is denoted 
+by $\epsilon$.
+
+A set of all natural numbers greater or equal to five can be denoted by
+$$ \{ x \mid x \in \mathbb{N} \; and \; x \geq 5 \} $$ 
+The left of the $\mid$ describes the elements in the set in terms of \emph{x},
+and the right part states the \emph{condition} on \emph{x}.
+
+The set of all rational numbers can be denoted by
+$$ \mathbb{Q} = \left\{ \frac{p}{q} \; \middle\vert \; p, q \in \mathbb{Z} \; and \; q \neq 0 \right\} $$
+
+\section{Operations on sets} 
+The size of a set, $\mid \emph{A} \mid$, is an example of a set operation. There
+are many other common set operations.$^2$
+
+\marginnote{Cartesian products are all \emph{pairs} $(a, b)$ where $a$ and $b$ are
+elements of their respective sets.}
+
+\textbf{Examples}\\
+Returns booleans \hfill $x \in A$, $y \not\in A$, $A \subseteq B$, $A = B$ \\
+Returns sets \hfill $A \cap B$, $A \cup B$, $A\setminus B$, $A \times B$, $\mathcal{P}(\mathbb{A})$
+
+Power sets are sets containing \emph{all} subsets of $A$. If $A = {1, 2, 3}$, then
+$$\mathcal{P}(\mathbb{A}) = \{\emptyset, \{1\}, \{2\}, \{3\}, \{1, 2\}, 
+\{1, 3\}, \{2, 3\}, \{1, 2, 3\}\}$$
+
+\newpage
+\section{Functions}
+\textbf{Definition 1.3.} Let $A$ and $B$ be sets. A \textbf{function} $ f
+: A \to B $ is a mapping from elements in $A$ to elements in $B$. $A$ is the
+\textbf{domain} of the function, and $B$ is the \textbf{codomain} of the 
+function.
+
+\textbf{Example} \\
+Predecessor function \hfill $Pred: \mathbb{Z} \to \mathbb{Z} $ \\
+defined by \hfill $Pred(x) = x - 1$ \\ 
+$Pred(A) $ has the set  
+$$ \{ \ldots, (-2, -3), (-1, -2), (0, -1), (1, 0), (2, 1), \ldots \} $$
+
+This function would match each integer to the integer before it.
+
+Functions can have multiple inputs.
+
+\textbf{Example} \\
+\marginnote{$^3$ k-ary refers to terms like unary, binary, ternary functions
+that take one, two, and three inputs respectively.}
+k-ary function$^3$ \hfill $f : A_1 \times A_2 \times \ldots \times A_k \to B$ \\
+Addition operator (binary) \hfill $ + : \mathbb{R} \times \mathbb{R} \to \mathbb{R} $ \\
+Predicate function \hfill $ f : \mathbb{N} \to $ \{True, False\}$^4$
+\marginnote{$^4$ Can be represented as 1 and 0 respectively.}[2cm]
+
+If an element $x$ is within the condition of the function, we say that $x$
+\textbf{satisfies} $P$ when $P(x)$ is True.
+
+\textbf{Definition 1.4.} A \textbf{predicate} function is defined by a codomain
+of \{True, False\}. Predicates and sets are closely related.
+
+\textbf{Example} \\
+Set \hfill Predicate \\
+$\{ x \mid x \in A \; and \:P(x) = True\}$. \hfill $ P : A \to$ \{True, False\} \\
+$B \subseteq A$ \hfill $P : A \to $ \{True, False\} by $P(x) = $ True if $x \in A$ \\
+\{0, 2, 4, \ldots \} \hfill  $ Even : \mathbb{N} \to $ \{True, False\}
+
+\section{Summation and product notation}
+\textbf{Definition 1.5.} The \textbf{summation notation} is used to express
+sums of terms where each term follows a pattern.
+$$ \sum_{i=1}^{100} \frac{i + i^2}{3 + i} $$
+$i$ is the \emph{index of summation}, 1 and 100 are the \emph{lower} and 
+\emph{upper bounds} of the summation.
+
+\textbf{Definition 1.6.} The \textbf{product notation} is similar to the 
+summation notation, but is used to abbreviate multiplication instead.
+$$ \prod_{i=j}^{100} f(i) = f(j) \times f(j+1) \times \ldots \times f(k) $$
+
+\marginnote{$^5$ These values are chosen so that the overall value of the 
+expression is not changed when adding an empty summation or multiplying
+by an empty product.}
+The lower bound can be greater than its upper bound, in which case it
+is an \emph{empty} summation or product$^5$ 
+\begin{itemize}
+    \item Summations have a sum of 0
+    \item Products have a product of 1
+\end{itemize}
+
+\newpage
+\section{Inequalities}
+\marginnote{$^6$ These might seem obvious but it is important to express them mathematically.}
+\textbf{Theorem 1.1.} For all real numbers $a$, $b$, and $c$, the following are true:$^{6}$
+\begin{enumerate}[label=(\alph*)]
+    \item If $a \leq b$ and $b \leq c$, then $a \leq c$.
+    \item If $a \leq b$, then $a + c \leq b + c$.
+    \item If $a \leq b$ and $c > 0$, then $ac \leq bc$.
+    \item If $a \leq b$ and $c < 0$, then $ac \geq bc$.
+    \item If $0 < a \leq b$, then $\frac{1}{a} \geq \frac{1}{b}$.
+    \item If $a \leq b < 0 $, then $\frac{1}{a} \geq \frac{1}{b}$.
+\end{enumerate}
+\marginnote{$^7$ A strict equality is expressed by $>$ or $<$.}
+If any of the above equalities are replaced with a strict equality, then the 
+corresponding "then" equality will also be strict.$^7$
+
+The implications of the inequalities is that adding or multipying by positive
+numbers preserves inequalities, while multiplying by negative numbers or
+taking reciprocals reverses inequalities. 
+
+This distinguishes inequalities from equalities, since equailities always
+preserve directionality. 
+
+\textbf{Theorem 1.2.} For all non-negative real numbers $a$ and $b$, and
+all strictly increasing functions $f : \mathbb{R}^{\geq 0} \to \mathbb{R}^{\geq 0}$,
+if $a \leq b$, then $f(a) \leq f(b) $. This also follows the strict equality substitution: \\
+if $a < b$, then $f(a) < f(b)$. 
+
+This theorem implies that positive operations on strictly increasing functions
+preserves equalities.
+
+\section{Propositional logic}
+\textbf{Definition 1.7.} A \textbf{proposition} is a statement that is either
+True or False.
+
+\textbf{Examples} 
+\begin{itemize}
+    \item $ 2 + 1 = 3$
+    \item $ 4 + 3 < 8$
+    \item Every even number greater than 2 is the sum of two prime numbers
+    \item Python's \verb|list.sort| is correct on every input list
+    
+\end{itemize}
+
+\textbf{Propositional variables} are used to represent propositions. The variable
+names start at \emph{p} by convention. 
+
+A \textbf{propositional/logical operator} is a predicate whose arguments 
+must be either True or False.
+
+A \textbf{propositional formula} is an expression built up from propositional
+variables by applying the following operators.
+
+\newpage
+\section{Basic operators}
+\marginnote{$^{8}$ There are two different \emph{or's}, the \emph{exclusive} and
+the \emph{inclusive}. Exclusive is having one but not the other, inclusive
+is having either or both. Usually, the inclusive \emph{or} is used. The exclusive
+\emph{or} is denoted by $\oplus$.}
+\begin{tabular}{|p{1cm} p{1cm} p{7cm}|}
+    \textbf{NOT} & $\neg$ & Unary negation operator that flips the truth value. \\
+    \textbf{AND} & $\land$ & Binary conjunction operator that returns True when both
+    arguments are True. \\
+    \textbf{OR} & $\lor$ & Binary disjunction operator that returns True when at least
+    one argument is True. \\
+\end{tabular}
+
+These are some common operators on propositional variables.$^{8}$ 
+
+\section{Implication operator}
+\textbf{Definition 1.8.} The \textbf{implication} $p \implies q $ asserts 
+that whenever $p$ is True, $q$ must be True. The statement $p$ is called
+the \textbf{hypothesis} of the implication, and the statement $q$ is called
+the \textbf{conclusion} of the implication.
+
+\begin{center}
+    
+\begin{tabular}{|p{1cm} p{1cm} p{1cm}|}
+    \hline
+    $p$ & $q$ & $p \Rightarrow q$ \\
+    \hline 
+    False & False & True \\
+    False & True & True \\
+    True & False & False \\
+    True & True & True \\
+    \hline   
+\end{tabular}
+\end{center}
+The two cases where $ p \implies q$ is True even though $p$ is False are
+called \textbf{vacuous truth} cases. These are True because the statement
+does not say anything about the behaviour of $q$ when $p$ is False. It simply
+cannot be disproven when $p$ is False.
+
+The following two formulas are equivalent to $p \implies q$:
+
+$\neg p \lor q$ \hfill This uses the vacuous truth cases. \\
+$\neg q \Rightarrow \neg p$ \hfill This is the \textbf{contrapositive} case.
+
+\marginnote{$^{9}$ These cases might seem tricky, but it helps if you
+compare the inputs with the truth table above.}
+\textbf{Example$^{9}$} \\
+If $p \implies q$ is \hfill "If you hate sweets, then you don't like candy". \\
+$\neg p \lor q$ would be \hfill "You like sweets, or you don't like candy." \\
+$\neg q \implies \neg p$ would be \hfill "You like candy, then you like sweets."
+
+\textbf{Definition 1.9.} The \textbf{converse} of an implication switches
+the hypothesis and conclusion. The converse of $p \implies q$ is $q \implies p$.
+These two equations are not logically equivalent.
+
+\section{Biconditional operator}
+\marginnote{
+\begin{tabular}{|p{0.8cm} p{0.8cm} p{1.5cm}|}
+    \hline
+    $p$ & $q$ & $p \iff q$ \\
+    \hline 
+    False & False & True \\
+    False & True & False \\
+    True & False & False \\
+    True & True & True \\ 
+    \hline   
+\end{tabular}
+}
+\textbf{Definition 1.10.} The \textbf{biconditional} operator denoted by $p \iff q$ 
+returns True when both $p \implies q$ and $q \implies p$ are True. In other words,
+$p \iff q$ abbreviates $(p \Rightarrow q) \land (q \Rightarrow p)$.
+
+This condition can be phrased any of the below: 
+\begin{center}
+"If $p$ then $q$, and if $q$ then $p$." \\
+"$p$ if and only if $q$." \\
+"$p$ iff $q$."
+\end{center}
+
+\textbf{Definition 1.11.} A \textbf{tautology} is a formula that is always
+True for every possible assignment of values to its propositional variables. E.g. 
+$(p \Rightarrow q) \Leftrightarrow (\neg p \lor q)$, $(\neg(p\lor q)) 
+\Leftrightarrow (\neg p \land \neg q)$.
+
+\newpage
+\section{Predicate logic}
+\marginnote{$^{10}$ You have already seen some real world examples of predicates: 
+the operators = and $<$ both return True or False based on operands!}
+So by now, you've heard of \textbf{predicates}, and how they have a codomain of True or False. 
+We can extend this definition to be "A statement whose truth depends on one or
+more variables from any set."$^10$
+
+When we substitute values into a predicate, we obtain a proposition:
+$P(x, y) $ is the statement $x^2 = y$ \hfill $P(5, 25)$ is True, $P(5, 24)$ is False.
+
+We can complete the definiton of the above statements by giving the domain
+of the prediate. In fact, \textbf{it is not a predicate if we do not give the domain.}
+
+\begin{center}
+$ P(x) : $ "$x$ is a power of 2," \quad where x$ \in \mathbb{N} $
+\end{center}
+
+\section{Quantification of variables}
+Truth aggregation is when we want to express a predicate's truth values for
+all elements of its domain, like the inequality $x^2 - 2x + 1 > 0$. 
+
+There are two ways we can express this truth aggregation using quantifiers, 
+which modify predicates by specifying how a variable should be interpreted.
+
+\textbf{Definition 1.12.} The \textbf{existential quantifier}, $\exists$, 
+abbreviates "there exists an element in the domain that satisfies the
+given predicate." 
+
+\marginnote{$^{11}$ These examples are stating that there must be \emph{at least}
+one of the variable that satisfies the condition --- a continuous OR operation.}
+\textbf{Examples$^{11}$}
+\begin{center}
+\begin{tabular}{|c p{7.54cm}|}
+    $\exists x \in \mathbb{N}$, $x \geq 0$ & There exists a natural number
+    $x$ that is greater than or equal to zero. \\
+    $\exists y \in \mathbb{N}$, $y = 2^a$  & There exists a natural number 
+    $y$ that is a power of 2.
+\end{tabular}
+\end{center}
+
+\textbf{Definition 1.13.} The \textbf{universal quantifier}, $\forall$,
+abbreviates "\emph{every} element in the domain satisfies the given predicate."
+
+\marginnote{$^{12}$ In contrast to the above, this asks for \emph{all} 
+elements to meet the condition, like a continuous AND operation.}
+\textbf{Examples$^{12}$}
+\begin{center}
+\begin{tabular}{|c p{7.54cm}|}
+    $\forall x \in \mathbb{N}$, $x \geq 0$ & Every natural number is
+    $x$ that is greater than or equal to zero. \\
+    $\forall y \in \mathbb{N}$, $y = 2^a$  & Every natural number is  
+    $y$ that is a power of 2.
+\end{tabular}
+\end{center}
+
+\section{Understanding multiple quantifiers}
+It is important to note that the ordering of quantifiers \emph{do} matter in
+some cases.
+
+For commutative operators like addition and multiplication, order does not
+matter. The universal operator is commutative if used consecutively:
+$$\forall x \in S_1, \forall y \in S_2, P(x, y)$$
+$$\forall y \in S_2, \forall x \in S_1, P(x, y)$$
+These formulas are equivalent. In fact, we can combine these quantifications
+since the variables have the same range!
+$$\forall x, y \in S, P(x, y)$$
+This reads, "every $x$ and $y$ in $S$ follows $P(x, y)$."
+
+\newpage
+The same follows for consecutive existential quantifiers:
+$$\exists x \in S_1, \exists y \in S_2, P(x, y) \quad \quad 
+\exists y \in S_2, \exists x \in S_1, P(x, y)$$
+This can be summed up as $\exists x, y \in S, P(x, y)$, read as 
+"there is at least one pair of elements $x$ and $y$ that satisfy $P(x,y)$."
+
+This is \emph{not} the case for alternating quantifiers however.
+
+\textbf{Example}
+$$\forall a \in A, \exists b \in B, Likes(a, b)$$
+"For every person $a$ in $A$, there exists a person $b$ in $B$, that $a$ likes $b$."
+$$\exists b \in B, \forall a \in A, Likes(a, b)$$
+"There exists a person $b$ in $B$, where for every person $a$ in $A$, $a$ likes $b$"
+
+In both these cases, the first variable is \emph{independent} of the
+second variable. Read nested quantifiers from left to right!
+
+\section{Sentences in predicate logic}
+With quantifiers, propositional operators, and predicates, we can represent 
+statements using \textbf{sentences}.
+
+\marginnote{$^{12}$ Sometimes a quantified variable will be refered to as 
+a \textbf{bound} variable, and an unquantified variable a \textbf{free} 
+variable.}
+\textbf{Definiton 1.14.} A \textbf{sentence} is a formula with no unquantified 
+\newline variable.$^{12}$ This ensures that the formula has a fixed truth value.
+
+\textbf{Examples} \\
+$\forall x \in \mathbb{N}, x^2 > y$ \hfill Not a sentence since $y$ is not bound. \\
+$\forall x, y \in \mathbb{N}, x^2 > y$ \hfill Is a sentence since both variables are bound. 
+
+\section{Manupulating negation}
+For any formula, we can state its negation by preceding it by a $\neg$ symbol.
+
+$\forall x \in \mathbb{N}, x \geq 0$ \hfill  $\neg(\forall x \in \mathbb{N}, x \geq 0)$
+
+\marginnote{$^{13}$ Note that many of these rules lead into switching from 
+\textit{and} to \textit{or}, and $\forall$ to $\exists$, and vice versa. Try 
+not to memorize these, but to understand them.}
+Though, sometimes it is hard to transliterate the formula. Instead, there are 
+\textit{simplification rules}$^{13}$
+
+$\neg(\neg p)$ \hfill p \\
+$\neg(p \lor q)$ \hfill $(\neg p) \land \neg(q)$ \\
+$\neg(p \land q)$ \hfill $(\neg p) \lor (\neg q)$ \\
+$\neg(p \Rightarrow q)$ \hfill $p \land (\neg q) ^{14}$ \\
+$\neg(p \Leftrightarrow q)$ \hfill $(p \land (\neg q)) \lor ((\neg p)\land q)$ \\
+$\neg(\exists x \in S, P(x))$ \hfill $\forall x \in S, \neg P(x)$ \\
+$\neg(\forall x \in S, P(x))$ \hfill $\exists x \in S, \neg P(x)$ 
+
+\marginnote{$^{14}$ As a reminder, $p \Rightarrow q$ is equivalent to 
+$ p \land \neg q$.} 
+
+\section{Avoid commas}
+Commas can cause ambiguity when connecting propositions.
+$$P(x), Q(x)$$
+Does this mean $P(x)$ \textit{and} $Q(x)$? Or $P(x)$ \textit{then} $Q(x)$? 
+
+We must never use commas to \textbf{connect propositions}.
+
+Commas have two valid uses only:
+\begin{itemize}
+    \item Immediately after variable quantification, or separating two variables 
+        with the same quantification
+    \item Separating arguments to a predicate
+\end{itemize}
+
+\textbf{Example} 
+$$\forall x, y \in \mathbb{N}, \forall x \in \mathbb{R}, P(x, y) \Rightarrow Q(x, y, z)$$
+
+\section{Defining predicates}
+\textbf{Definiton 1.15.} Let $n, d \in \mathbb{Z}$. We want to say that $d$ 
+divides $n$, or $n$ is divisible by $d$, when there exists a $k \in \mathbb{Z}$ 
+such that $n = dk$. So, we will use the notation $d \mid n$ to represent 
+"$d$ divides $n$." This is a \textit{binary} \textbf{divisibility predicate}. 
+
+\textbf{Examples} \\
+Let us express the statement "For every integer $x$, if $x$ divides 10, then 
+it also divides 100" with the divisibility predicate, and without.
+
+\textbf{Without the predicate}:
+$$\forall x \in \mathbb{Z}, (\exists k \in \mathbb{Z}, 10 = kx) \Rightarrow 
+(\exists k \in \mathbb{Z}, 100 = kx)$$
+\marginnote{$^{15}$ Note that there are two different $k$ variables, we could 
+also express this using $k_1$ and $k_2$.}
+"For every integer $x$, if there exists an integer $k$ such that $kx = 10$, then 
+for another integer $k$, $kx = 100$."$^{15}$
+
+\textbf{With the predicate}:
+$$\forall x \in \mathbb{Z}, x \mid 10 \Rightarrow x \mid 100$$ 
+Much easier, isn't it? 
+
+We can use this definiton to formally define prime numbers.
+
+\textbf{Definition 1.16.} Let $p \in \mathbb{N}$. A \textbf{prime} number is greater 
+than 1, and the only natural numbers that divide it are 1 and itself. Primes are
+restricted to being positive. 
+
+\textbf{Example} \\
+Let $Prime(p)$ denote that "$p$ is a prime number."
+$$Prime(p) : p > 1 \land (\forall d \in \mathbb{N}, d \mid p \Rightarrow 
+d = 1 \lor d = p), \quad p \in \mathbb{N}$$
+Let us express the property that "there are infinitely many primes." \\
+How do we express \textit{infinitely many}? Since we know that $ \mathbb{N}$ is
+infinite, we can express the statement as "every natural number has a prime 
+number larger than it."
+$$\forall n \in \mathbb{N}, \exists p \in \mathbb{N}, p > n \land Prime(p)$$
+
+\marginnote{$^{16}$ First conjectured by Pierre de Fermat in 1637, he states that 
+the margins of the text \textit{Arithmetica} were too narrow to fit his proof!}
+\textbf{Definition 1.17.} \textbf{Fermat's Last Theorem} states that there are 
+no three positive integers $a$ , $b$, and $c$ that satisfy $a^n + b^n = c^n$ for 
+any integer $n > 2$.$^{16}$
+
+Let us express this theorem using predicate logic. 
+
+\newpage
+Which of these variables are quantified? $n$ is certainly bound to the range of 
+for all $n > 2$ and $n$ being an integer. $a$, $b$, and $c$ are not specifically 
+bound, but since the theorm states \textit{None} of them satisfy the statement, 
+we can say "there does not exist" instead.
+$$\forall n \in \mathbb{N}, n > 2 \Rightarrow \neg (\exists a, b, c \in 
+\mathbb{Z}^+, a^n + b^n = c^n )$$
+Following negation rules, we can push this negative inwards closer to the predicates.
+$$\forall n \in \mathbb{N}, n > 2 \Rightarrow (\exists a, b, c \in 
+\mathbb{Z}^+, a^n + b^n \ne c^n)$$
+
+\section{Formula conventions}
+Operation precedence in decreasing order:
+\begin{center}
+\begin{enumerate}
+    \item $\neg$
+    \item $\lor, \land$
+    \item $\Rightarrow, \Leftarrow$
+    \item $\forall, \exists$
+\end{enumerate}
+\end{center}
+Combinations of operations at the same level \textit{must} be disambiguated 
+using parentheses. 
+
+The $\lor$ and $\land$ operators are \textit{associative}, meaning that their 
+orders do not matter. But the implicator operator is \textit{not associative}. 
+
+Variable naming conventions state that variables should have distinct names 
+within the same formula.
+$$(\forall x \in \mathbb{N}, f(x) \geq 5) \lor (\exists x \in \mathbb{N}, f(x) < 5)$$
+Although the above is correct since variables only exist in the scope of their 
+parentheses, we still prefer to use the following:
+$$(\forall x \in \mathbb{N}, f(x) \geq 5) \lor (\exists y \in \mathbb{N}, f(y) < 5)$$
+
+\end{document}

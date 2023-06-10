@@ -1,0 +1,251 @@
+\documentclass{article}
+\usepackage[top=2.54cm, bottom=2.54cm, outer=8cm, inner=2.54cm, heightrounded, marginparwidth=4.46cm, marginparsep=1cm]{geometry}
+\usepackage{lipsum}
+\usepackage{parskip}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{marginfix} % floats sidenotes
+\usepackage{sidenotes}
+\usepackage{amsmath}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{enumitem}
+\title{Week 5: Analyzing Algorithm Running Time}
+\author{Michael Zhou}
+\date{2023-02-28}
+
+\newcommand\qedsymbol{\hfill$\blacksquare$}                                     
+\newcounter{defcount}
+\newcounter{excount}
+\newcounter{thcount}
+\newcommand\df{\stepcounter{defcount} \textbf{Definition 5.\thedefcount}. }
+\newcommand\ex{\stepcounter{excount} \textbf{Example 5.\theexcount}. }
+\newcommand\tr{\stepcounter{thcount} \textbf{Theorem 5.\thethcount}. }
+
+\begin{document}
+\maketitle
+\section{Asymptotic growth}
+When we write $f: A \rightarrow B$, we are saying the function maps elements 
+of $A$ to elements of $B$. We will mainly be concerned about mapping 
+natural numbers to the nonnegative real numbers.\sidenote{This is the domain 
+and range that arises for algorithm analysis since an algorithm cannot 
+take negative time to run...
+} Or in other words: $f: \mathbb{N} \rightarrow \mathbb{R}^{\geq 0}$. We will 
+only care about long term (\textbf{asymptotic}) growth. 
+
+\df Let $f, g: \mathbb{N} \rightarrow \mathbb{R}^{\geq 0}$. We say that 
+$g$ is \textbf{absolutely dominated by} $f$ if and only if for all $n \in 
+\mathbb{N}, g(n) \leq f(n)$. 
+
+\ex Let $f (n) = n^2 $ and $g (n) = n$. Prove that $g$ is absolutely dominated 
+by $f$. 
+
+\textit{Translation.} $\forall n \in \mathbb{N}, g (n) \leq f (n)$.
+
+\textit{Proof.} Let $n \in \mathbb{N}$. We want to show that $n \leq n^2$.
+
+\textbf{Case 1.} Assume $n = 0$, then $n^2 = n = 0$, so the statement is True. 
+
+\textbf{Case 2.} Assume $n \geq 1$, then we can multiple both sides of the 
+inequality by $n$, which is $n ^2 \geq n$. Thus this is True.
+
+\qedsymbol
+
+\df Let $f , g : \mathbb{N} \rightarrow \mathbb{R}^{\geq 0}$. We say that 
+$g$ \textbf{is dominated by $f$ up to a constant factor} if and only if there 
+exists a postive real number $c$ such that for all $n \in \mathbb{N}$, 
+$g (n) \leq c \cdot f ( n)$.
+
+\ex Let $f(n) = n^n$ and $g(n) = 2n$. Prove that $g$ is dominated by $f$ 
+up to constant factor.\sidenote{At $n=1$, $2n > n^2$.}
+
+\textit{Translation.} $\exists c \in \mathbb{R}^+, \forall n \in \mathbb{N}, 
+g(n) \leq c \cdot f(n)$.
+
+\textit{Proof.} Let $c = 2$, and let $n \in \mathbb{N}$. We want to prove that 
+$g(n) \leq c \dot f(n)$, or in other words, $2n \leq 2n^2$. 
+
+\textbf{Case 1.} Assume $n = 0$, then $2n = 2n^2 = 0$. So this case is True. 
+
+\textbf{Case 2.} Assume $n \geq 1$. Taking the inequality, we can multiply
+both sides by $2n$, and we get $2n^2 \geq 2n$. Thus this is True. 
+
+\qedsymbol
+
+These two definitions are still too restrictive for runtimes, where constant 
+factors do not matter. Consider $f(n) = n^2$ and $g(n) = n+ 90$, no matter how 
+much we scale $f(n)$, $f(0)$ will always be smaller than $g(0)$. So, we 
+cannot say that $f(n)$ is dominated by $g(n)$ up to a constant factor.
+
+But it is certainly possible to find a constant factor at any value other 
+than $n = 0$, this brings us to the third definition:
+
+\newpage
+\df Let $f, g : \mathbb{N} \rightarrow \mathbb{R}^{\geq 0 }$. We say that 
+$g$ \textbf{is eventually dominated by} $f$ if and only if there exists 
+$n_0 \in \mathbb{R}^+$ such that $\forall n \in \mathbb{N}$, if $n \geq n_0$
+then $g(n) \leq f (n)$.
+
+\ex Let $f(n) = n^2$ and $g(n) = n + 90$. Prove that $g$ is eventually dominated 
+by $f$.
+
+\textit{Translation.} $\exists n_0 \in \mathbb{R}^+, \forall n \in \mathbb{N}, 
+n \geq n_0 \Rightarrow g (n) \leq f (n)$.
+
+\textit{Proof.} Let $n_0 = 90$, let $n\in \mathbb{N}$, and assume $n \geq n_0$. 
+WTS $n + 90 \leq n^2$.
+\begin{align*}
+    n + 90 &\leq n + n \tag*{since $n \geq 90$}\\ 
+    &\leq 2n \\
+    &\leq n \cdot n \tag*{since $n \geq 2$}\\
+   &\leq n^2
+\end{align*}
+
+\qedsymbol
+
+This definition ignores small values of $n$, whereas the previous ignores
+constant factors. Our last definition will combine both of these traits: 
+
+\df Let $f, g: \mathbb{N} \rightarrow \mathbb{R}^{\geq 0}$. We say that 
+$g$ \textbf{is eventually dominated by $f$ up to a constant factor} if and 
+only if there exist $c, n_0 \in R^+$, such that for all $n \in \mathbb{N}$, 
+if $n \geq n_0$ then $g (n) \leq c \cdot f ( n)$.
+
+In this case, we also say that $g$ \textbf{is Big-Oh of} $f$, and write 
+$g \in \mathcal{O} (f)$.
+
+\df $\mathcal{O} (f)$ is defined as the \textit{set of functions} that are
+eventually dominated by $f$ up to a constant factor: 
+$$\mathcal{O} (f) = \{ g \mid g : \mathbb{N} \rightarrow \mathbb{R}^{\geq 0}, 
+\exists c, n_0 \in \mathbb{R}^+ , \forall n \in \mathbb{N}, n \geq n_0 
+\Rightarrow g (n) \leq c \cdot f (n)\}$$
+
+\ex Let $f ( n) = n^3$ and $g(n) = n^3 + 100n +5000$. Prove that $g \in 
+\mathcal{O} (f). $
+
+\textit{Translation.} $\exists c, n_0 \in \mathbb{R}^+, \forall n \in \mathbb{N}, 
+n \geq n_0 \Rightarrow n^3 + 100n + 5000 \leq cn^3$.
+
+\textit{Discussion.} We can have two approaches: focus on choosing $n_0$, or 
+focus on choosing $c$. Either way, we will divide the inequality to three 
+smaller inequalities: 
+\begin{enumerate}
+    \item $n^3 \leq n^3$
+    \item $100n \leq n^3$
+    \item $5000 \leq n^3$
+\end{enumerate}
+
+\textit{Proof.} Let $c = 3$ and $n_0 = \sqrt[3] {5000}$. Let $n \in \mathbb{N}$, 
+and assume that $n \geq n_0$. WTS $n^3 + 100 n + 5000 \leq cn^3$. 
+
+We can first prove the three simpler inequalities: 
+\begin{itemize}
+    \item $n^3 \leq n^3$ (since the two quantities are equal)
+    \item Since $n \geq n_0 \geq 10$, we know that $n^2 \geq 100$, and so $n^3 \geq 100n $.
+    \item Since $n \geq n_0$, we know that $n^3 \geq n^3_0 = 5000$
+\end{itemize}
+Adding these up we get 
+$$n ^3 + 100 n + 5000 \leq n^3 + n^3 + n^3 = cn^3$$
+\qedsymbol
+
+\newpage
+\section{One special case of Big-Oh: $\mathcal{O} (1)$}
+Consider the function $f ( n) = 1$, which always outputs the value 1. Unpacking 
+the definition of Big-Oh of $f$ we get
+\begin{align*}
+    &g \in \mathcal{O} (f) \\
+    &\exists c, n_0 \in \mathbb{R}^+ , \forall n \in \mathbb{N}, n \geq n_0 
+    \Rightarrow g (n) \leq c \cdot f ( n) \\ 
+    &\exists c, n_0 \in \mathbb{R}^+ , \forall n \in \mathbb{N}, n \geq n_0 
+    \Rightarrow g(n) \leq c \tag*{since $f (n) =1$}
+\end{align*}
+There exists a constant $c$ such that $g (n) $ is eventually always less than 
+or equal to $c$. We say that such functions $g$ are \textbf{asymptotically 
+bounded} with respect to their input, and write $g = \mathcal{O} (1) $.
+
+\section{Omega and Theta}
+Big-Oh is limited in the sense that it is not exact. Consider two functions: 
+$g (n) = n + 1$ and $f ( n) = n^{100}$. We can write $n + 10 \in \mathcal{O} (n^{100})$ 
+but it would not be very informative, since $f(n)$ grows \textit{much }faster 
+than $g(n)$.
+
+In this section, we will introduce ways to express tight bounds on the growth 
+of a function. 
+
+\df Let $f, g : \mathbb{N} \rightarrow \mathbb{R}^{\geq 0 }$. We say that 
+$g$ \textbf{is Omega of} $f$ if and only if there exist constants $c, n_0 
+\in \mathbb{R}^+ $ such that for all $n \in \mathbb{N}$, if $n \geq n_0 $, 
+then $g ( n) \geq c \cdot f ( n)$. In this case, we write $g \in \Omega (f)$.
+
+Omega is the dual of Big-Oh. When $g \in \Omega (f)$, then $f$ is a \textit{lower 
+bound} on the growth rate of $g$. We can now express a bound that is 
+tight for a function's growth by combining Big-Oh and Omega: if $f $ is
+asymptotically both a lower and upper bound for $g$, then $g$ must grow 
+at the same rate as $f$.
+
+\df Let $f, g : \mathbb{N} \Rightarrow \mathbb{R}^{\geq 0}. $ We say that 
+$g$ \textbf{is Theta of} $f$ if and only if $g$ is both Big-Oh of $f$ 
+and Omega of $f$. In this case, we can write $g \in \Theta (f)$, and say 
+that $f$ is a \textbf{tight bound} on $g$.
+
+Equivalently, $g$ is Theta of $f$ if and only if there exist constants 
+$c_1, c_2, n_0 \in \mathbb{R}^+$ such that for all $n \in \mathbb{N}$ if 
+$n \geq n_0 $ then $c_1 f (n) \leq g ( n) \leq c_2 f(n)$.
+
+\section{Properties of Big-Oh, Omega, and Theta}
+\subsection{Elementary functions}
+The following theorem tells us how to compare four different types of 
+"elementary" functions: constant functions, logarithms, powers of $n$, and 
+exponential functions.
+
+\tr For all $a, b \in \mathbb{R}^+ $, the following statements are True:
+\begin{enumerate}
+    \item $a > 1 \land b > 1 \Rightarrow log_an \in \Theta (log_bn)$
+    \item $a < b \Rightarrow n^a \in \mathcal{O} (n^b) \land n^a \notin \Omega 
+        (n^b)$
+    \item $a < b \Rightarrow a^n \in \mathcal{O} (b^n ) \land a^n \notin 
+        \Omega (b^n)$
+    \item $a > 1 \Rightarrow 1 \in \mathcal{O} (log_a n) \land 1 \notin 
+        \Omega (log_a n)$
+    \item $log_an \in \mathcal{O} (n^b) \land log_an \notin \Omega (n^b)$
+    \item $b > 1 \Rightarrow n^a \in \mathcal{O} (b^n) \land n^a \notin 
+        \Omega (b^n)$
+\end{enumerate}
+\subsection{Basic properties}
+\tr For all $f : \mathbb{N} \Rightarrow \mathbb{R}^{\geq 0}, f \in 
+\Theta (f)$.
+
+\tr For all $f ,g : \mathbb{N} \rightarrow \mathbb{R}^ {\geq 0}, g \in 
+\mathcal{O} (f) $ if and only if $f \in \Omega (g)$. 
+
+\tr For all $f, g, h : \mathbb{N} \rightarrow \mathbb{R}^ {\geq 0}$:
+\begin{itemize}
+    \item If $f \in \mathcal{O} (g)$ and $g \in \mathcal{O} (h)$, then 
+        $f \in \mathcal{O} (h)$.
+    \item If $f \in \Omega (g)$ and $g \in \Omega (h)$, then $f \in 
+        \Omega (h)$.
+    \item If $f \in \Theta (g)$ and $g \in \Theta (h)$, then $f \in 
+        \Theta (h)$.
+\end{itemize}
+\subsection{Operations on functions}
+\df Let $f, g : \mathbb{N} \rightarrow \mathbb{R}^ {\geq 0}.$ We can define 
+the \textbf{sum of $f$ and $g$} as the function $f + g : \mathbb{N} 
+\rightarrow \mathbb{R}^ {\geq 0}$ such that 
+$$\forall n \in \mathbb{N}, (f + g) (n) = f (n) + g (n)$$
+\tr For all $f, g, h : \mathbb{N} \rightarrow \mathbb{R}^ {\geq 0}$, the 
+following hold: 
+\begin{itemize}
+    \item If $f \in \mathcal{O} (h) $ and $g \in \mathcal{O} (h)$, then $f + g
+         \in \mathcal{O} (h)$.
+    \item If $f \in \Omega (h)$, then $f + g \in \Omega (h)$.
+    \item If $f \in \Theta (h)$ and $g \in \mathcal{O} (h)$, then 
+        $f + g \in \Theta$.
+\end{itemize}
+
+\begin{align*}
+    n + 1 &= \sum_{i=1}^{k}( a_i \cdot i ! )+ 1 \\
+    \sum_{i=1}^{k} (a_i \cdot i !) + 1 &= \sum_{i=1}^{k} (a_i \cdot i!) + 1 
+\end{align*}
+
+\end{document}

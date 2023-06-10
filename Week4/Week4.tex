@@ -1,0 +1,148 @@
+\documentclass{article}
+\usepackage[top=2.54cm, bottom=2.54cm, outer=8cm, inner=2.54cm, heightrounded, marginparwidth=4.46cm, marginparsep=1cm]{geometry}
+\usepackage{lipsum}
+\usepackage{parskip}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{marginfix} % floats sidenotes
+\usepackage{sidenotes}
+\usepackage{amsmath}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{enumitem}
+\title{Week 4: Representation of Natural Numbers}
+\author{Michael Zhou}
+\date{2023-02-28}
+
+\newcommand\qedsymbol{\hfill$\blacksquare$}                                     
+\newcounter{defcount}
+\newcounter{excount}
+\newcounter{thcount}
+\newcommand\df{\stepcounter{defcount} \textbf{Definition 4.\thedefcount}. }
+\newcommand\ex{\stepcounter{excount} \textbf{Example 4.\theexcount}. }
+\newcommand\tr{\stepcounter{thcount} \textbf{Theorem 4.\thethcount}. }
+
+\begin{document}
+\maketitle
+\section{Decimal representation of natural numbers}
+A number in decimal is expressed in digits of $d_{k-1} \ldots d_1d_0$, 
+where each digit $d_i$ is in \{1, \ldots, 9\}. The number that we get 
+using this sequence of digits is $\sum_{i=0}^{k-1} d_i \times 10^i$. 
+For example, 569 is $5 \times 10^2 + 6 \times 10^1 + 9 \times 10^0$.
+
+Some useful properties of decimal representation:
+\begin{enumerate}
+    \item To multiply by 10, we can just add a 0 to the right end
+    \item With $k$ decimal digit positions, there are exactly $10^k$ 
+        numbers that can be represented. For example $10^3$ is from 0 to 999. 
+\end{enumerate}
+
+\section{Binary representation of natural numbers}
+Binary or base 2 representation uses binary digits \{0, 1\} instead of 
+the 10 decimal digits. The corresponding value of the numbers in a binary sequence 
+is $\sum_{i=0}^{k-1} d_i \times 2^i$. For example, the decimal number 139 would 
+be 10001011 in binary: $1 \times 2^7 + 1 \times 2^3 + 1 \times 2^1 + 1 \times 
+2^0$. 
+
+\subsection{Converting from binary to decimal}
+We can use the sum given above to convert binary to decimal:
+$$100101 = 1 \times 2^5 + 1 \times 2^2 + 1 \times 2^0 = 32 + 4 + 1 = 37 $$
+
+\subsection{Properties of binary representation}
+\tr For every natural number $n$, there exists $p \in \mathbb{N}$ and bits 
+$b_p, \ldots, b_0 \in \{0, 1\}$ such that $n = \sum_{i=0}^{p} b_i2^i$.
+
+\textit{Proof.} We will prove an equivalent statement that is easily to 
+use strong induction on:
+$$\forall m \in \mathbb{N}, \left(\forall n \in \mathbb{N}, n \leq m 
+    \Rightarrow ( \exists p \in \mathbb{N}, \exists b_0, \ldots, b_p 
+    \in \{0, 1\}, n = \sum_{i=0}^{p} b_i 2^i ) \right)$$
+We can define $P(m)$ as the part after $\forall m \in \mathbb{N}$, and then use 
+induction to prove it.
+
+\textbf{Base case.} Let $m = 0$. There would be only one number to consider, 
+which is zero. Let $p = 0$ and $b_0 = 0$, then $\sum_{i=0}^{p} b_i 2^i = 0 \times 
+2^0 = 0$. Thus the base case is True.
+
+\newpage
+\textbf{Inductive step.} Let $m \in \mathbb{N}$, and assume $P (m)$ is True: 
+that every natural number less than equal to $m$ has a binary representaiton. 
+WTS $P(m+1)$ is True. 
+
+Let $n \in \mathbb{N}$ and assume that $n \leq m + 1 $. If $n \leq m$ then 
+by induction hypothesis $n$ has a binary representation. All we need to do is 
+prove $n = m+1$. We will use proof by cases for even and odd terms: 
+
+\textbf{Case 1.} Assume $n$ is even: $\exists k \in \mathbb{N}, n = 2k$. 
+
+By the properties of divisibility, we know that since $k \mid n$, $k < n$. 
+Then by the hypothesis, there exists $p \in \mathbb{N}$ and $b_p, \ldots, b_0 
+\in \{0, 1\}$ such that $k = \sum_{i=0}^{p} b_i 2^i$. Then $n$ would be 
+\begin{align*}
+    n &= 2 \sum_{i=0}^{p} b_i 2^i\\ 
+      &= \sum_{i=0}^{p} b_i 2^i \cdot 2 \\
+      &= \sum_{i=0}^{p} b_i 2^{i+1} 
+\end{align*}
+We want to shift the sum so that we can go from 0 to $p+ 1$. 
+
+Let $p' = p + 1$, and let $b'_0 = 0$, and for all $i \in \{1, 2, \ldots, p+ 1\}$, 
+let $b'_i = b_{i-1}$ Then $n = \sum_{i=0}^{p'} b'_i 2^i$, which is equal to the 
+former since $b'_0 = 0$.
+
+\textbf{Case 2.} Assume that $n$ is odd: $\exists k \in \mathbb{N}, n = 2k + 1$.
+
+Similar to the last case, we get $n =\left( \sum_{i=0}^{p} b_i 2^{i+1} \right)+ 1$. 
+
+We can do the same as above, but make $b'_0 = 1$ to incorporate the $+1$ term, 
+then $n = \sum_{i=0}^{p'} b'_i 2^i$.
+
+\qedsymbol
+
+The problem with this representation is that they are not unique.\sidenote{Since 
+we proved an existential, it only states \textit{at least one}, not exactly one.}
+For example, we could represent the number 2 as 10, or 010, or 0010. So computer 
+scientists can use the following theorem to induce unique representations: 
+
+\tr For every number $n \in \mathbb{Z^+}$, there exist \textbf{unique} values 
+$p \in \mathbb{N}$ and $b_p, \ldots, b_0 \in \{0, 1\}$ such that both the following 
+hold: 
+\begin{enumerate}
+    \item $n = \sum_{i=0}^{p} b_i 2^i$ (this is a binary representation of $n$)
+    \item $b_p = 1$ (this representation has no leading zeroes)
+\end{enumerate}
+\subsection{Dividing by two}
+\textbf{Lemma 4.3}. let $n \in \mathbb{N}$, and assume $n \geq 2$. Let the 
+binary representation of $n$ be $b_p, \ldots, b_0$, where $b_p = 1$. Then 
+the binary represnetaiton of $\lfloor n / 2 \rfloor = b_p, \ldots, b_1$ (rightmost 
+digit removed).
+
+\textit{Proof.} Let $n \in \mathbb{N}$, and assume $n \geq 2$. Let $p \in \mathbb{N}$ 
+and $b_0, \ldots, b_p \in \{0, 1\}$ such that $n = \sum_{i=0}^{p} b_i 2^i$ and 
+$b_p = 1$. We divide the proof into even or odd cases: 
+
+\textbf{Case 1.} Assume $n$ is even. Then $b_0 = 0 $, and thus 
+\begin{align*}
+    \left\lfloor \frac{n}{2} \right\rfloor &= \frac{n}{2} \\
+                                           &= \frac{\sum_{i=0}^{p} b_i 2^i}{2} 
+                                           \tag*{since $b_0 = 0$} \\
+                                           &= \frac{\sum_{i=1}^{p} b_i 2^i}{2} \\
+                                           &= \sum_{i=1}^{p} b_i 2^{i-1} \\
+                                           &= \sum_{i=1}^{p-1} b_{i+1} 2^i 
+\end{align*}
+\textbf{Case 2.} Assume $n$ is odd. Then $b_0 = 1$, and thus 
+\begin{align*}
+    \left\lfloor \frac{n}{2} \right\rfloor &= \frac{n-1}{2} \\
+                                           &= \frac { \left( \sum_{i=0}^{p} b_i 2^i 
+                                       \right) -1}{ 2} \\
+                                           &= \frac{ \left( \sum_{i=1}^{p} b_i 2^i 
+                                               \right) + 1 \cdot 2^0 - 1}{2} \tag*{since
+                                               $b_0 = 1$} \\ 
+                                           &= \frac{\sum_{i=1}^{p} b_i 2^i}{2} \\
+                                           &= \sum_{i=1}^{p} b_i 2^{i-1} \\
+                                           &= \sum_{i=0}^{p-1} b_{i+1} 2^i 
+\end{align*}
+
+\qedsymbol
+
+\end{document}

@@ -1,0 +1,433 @@
+\documentclass{article}
+\usepackage[top=2.54cm, bottom=2.54cm, outer=8cm, inner=2.54cm, heightrounded, marginparwidth=4.46cm, marginparsep=1cm]{geometry}
+\usepackage{lipsum}
+\usepackage{parskip}
+\usepackage{amsfonts}
+\usepackage{marginfix} % floats sidenotes
+\usepackage{sidenotes}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{enumitem}
+\title{Week 3: Induction and Representations of Natural Numbers}
+\author{Michael Zhou}
+\date{2023-01-07}
+
+\newcounter{defcount}
+\newcounter{excount}
+\newcounter{thcount}
+\newcommand\df{\stepcounter{defcount} \textbf{Definition 3.\thedefcount}. }
+\newcommand\ex{\stepcounter{excount} \textbf{Example 3.\theexcount}. }
+\newcommand\tr{\stepcounter{thcount} \textbf{Theorem 3.\thethcount}. }
+\newcommand\qedsymbol{\hfill$\blacksquare$}
+
+
+\begin{document}
+\maketitle
+Use induction to prove:
+\begin{itemize}
+    \item Statements in number theory 
+    \item Statements in new domains 
+    \item Properties about sequences 
+    \item Counting combinatorial objects
+\end{itemize}
+
+\section{The principle of induction}
+\df The principle of \textbf{induction} can be used to prove statements 
+of the form $\forall n \in \mathbb{N}, P(n)$, and \textit{only} applies to 
+statements of this type --- universal quantifiers over natural numbers. 
+
+The most bjasic form, \textbf{simple} induction, has two steps:\sidenote{
+These steps are called \textbf{conjunctions}, and may be presented in either 
+order.}
+\begin{itemize}
+    \item The \textbf{base case} is the proof that the statement holds for the 
+        first natural number, 0. 
+    \item The \textbf{inductive step} is a proof that for all $n \in \mathbb{N}$, 
+        if $P(n)$ is True, then $P(n+1)$ is also True: 
+        $$\forall n \in \mathbb{N}, P(n) \Rightarrow P(n+1)$$
+\end{itemize}
+Once these two steps are proven, then by the principle of induction, we can 
+conlcude that $\forall n \in \mathbb{N}, P(n)$.
+
+\ex Prove that for any $m, x, y, n \in \mathbb{N}$ such that $n \geq 1$ if 
+$x \equiv y \text{ mod } m$, then $x^n \equiv y^n \text{ mod } m$.
+
+This is a question from PS1, and we could prove that $x^2 \equiv y^2 \text{ mod } m$ 
+and $x^3 \equiv y^3 \text{ mod } m$ and so on by the same pattern of 
+$ac \equiv bd \text{ mod } n$. But to make it mathematically rigourous for 
+all $n$ and $m$, we need to use induction.
+
+How does this work? It is essentially the domino effect that we've examined 
+in PS1. By knowing $P(0)$ is True, we know that $P(0) \Rightarrow P(1)$ through 
+the base case, then we know $P(1) \Rightarrow P(2)$ by the inductive step, 
+and so on. 
+
+By showing that as long as it is True for $n$, it is also True for the 
+number right after $n$, then we can conclude that it is True for every $n$.
+
+\newpage
+\section{Examples from number theory} 
+\ex Prove that for every natural number $n$, $7 \mid 8^n - 1$.
+
+\textit{Translation.} $\forall n \in \mathbb{N}, 7 \mid 8^n - 1$\sidenote{
+    The translation and discussion section will start merging into one soon.
+}
+
+\textit{Discussion.} Definite the predicate $P(n)$ as "$7 \mid 8^n - 1$", 
+then by the divisibility predicate, $7 \cdot y = 8^n - 1$. Then we know 
+exactly how to use induction in this proof.
+
+\textit{Proof.} Let $P(n)$ be $7 \cdot y = 8^n - 1.$
+$$\exists y \in \mathbb{Z}, 7 \cdot y = 8^n - 1$$
+We want to prove that for all $n \in \mathbb{N}$ that $P(n)$ holds.
+
+\textbf{Base case:} Let $n = 0$, we want to prove $P(0)$ holds True. \\
+We know that $7 \cdot 0 = 8^0 - 1$ holds True.
+
+\textbf{Inductive step:} Let $k \in \mathbb{N}$, and assume that $P(n)$ 
+is True, we want to prove $P(n+1)$. In other words, 
+$$7 \mid 8^{k+1} - 1 \text{ or } \exists y \in \mathbb{Z}, 8^{k+1} - 1 = 
+7y_k$$
+How do we prove this? Well we want to use previously proved definitions, 
+so extracting $8^k - 1 $ from the equation could work.
+\begin{align*}
+    8^{k+1} - 1 &= 8^{k+1} - 8 + 7 \\
+                &= 8(8^k - 1) + 7 
+\end{align*}
+Next we can use the \textbf{induction hypothesis}, which is $7y_k = 8^k - 1$.
+\begin{align*}
+    8^{k+1} - 1 &= 8(8^k - 1) + 7 \\
+                &= 8(7y_k) + 7 \\
+                &= 56y_k + 7 \\
+                &= 7(8y_k + 1)  
+\end{align*}
+We can let $8y_k + 1 = y_{k+1}$, and thus the proof is complete.
+
+\ex Prove that for every natural number $n, n(n^2 + 5)$ is divisible by 6.
+
+\textit{Proof.} Let $P(n)$ be the statement that $\exists n \in \mathbb{N}, 
+6 \mid n (n^2 + 5)$.
+
+\textbf{Base case:} Prove $P (0)$ is True. We know this is True since
+$6 \mid 0 (0^2 + 5) = 6 \mid 0$, and anything divides 0.  
+
+\textbf{Inductive step:} Let $k \in \mathbb{N}$, and assume $P(k)$ is True. 
+We want to prove $P (k+1)$ holds, such that $ 6 \mid (k + 1) ((k+1)^2 + 5)$. 
+We are looking to isolate a $k(k^2 +5)$ term to apply the induction 
+hypothesis.
+\begin{align*}
+    (k+1) ( (k+1)^2 + 5) &= (k+1) (k^2 + 2k + 6) \\
+                         &= (k+1) ((k^2 + 5) + (2k + 1)) \\
+                        &= k(k^2 + 5) + k(2k + 1) + (k^2 + 5) + (2k + 1)\\
+                        &= k(k^2 + 5) + 3k^2 + 3k  + 6 \\
+                        &= k(k^2 + 5) + 3k(k+ 1) + 6 
+\end{align*}
+
+For the first term $k(k^2 +5)$, we know that is divisible by 6 due to the 
+induction hypothesis. 
+
+The second term is tricky, but we know that $k(k + 1)$
+has two consecutive natural numbers, meaning one of them is even, so the 
+entire term is even. What does this imply? It means that $ k(k+1)$ has a
+factor of 2. Adding in the coefficient of 3, it means that the second term 
+has a factor of 6 for certain. 
+
+The third term is obviously divisible by 6. 
+
+Using the divisibility of linear combinations, since each term is divisible 
+by 6, the entire sum is also divisible by 6. Thus, the proof is complete.
+
+Finally let's go back to Example 3.1 to prove it using induction.
+
+\ex Prove that for any $m, x, y \in \mathbb{N}$ and for any $n \in \mathbb{N}$ 
+that if $x \equiv y (\text{ mod } m)$ we have $x^n \equiv y^n (\text{ mod } m)$.
+
+\textit{Translation.}\sidenote{Note that we separated the variables $m, x, y$ 
+and $n$, we will discuss this in the next section.}
+$$\forall m, x, y \in \mathbb{N}, \forall n \in \mathbb{N},  x \equiv y 
+(\text{mod } m) \Rightarrow \forall n \in \mathbb{N}, x^n \equiv y^n 
+(\text{ mod } m)$$
+\textbf{Base case:} Prove $P (0)$ is True. We have $x^0 \equiv y^0 
+(\text{ mod } m)$, which is trivially True.
+
+\textbf{Inductive step:} Let $k \in \mathbb{N}$. Assuming $P(n)$ is True, 
+prove $P(n+1)$ is True. We have $x^{k+1} \equiv y^{k+1} (\text{ mod } m)$. 
+
+From the previous example, we know that
+$$x^k \equiv y^k (\text{ mod } m) \land x \equiv y (\text{ mod } m) 
+\Rightarrow x \cdot x^k \equiv y \cdot y^k (\text{ mod } m)$$
+
+Since we assumed the left side is True, we also know the right side 
+is True due to the implication. Thus, the proof is complete.
+
+Why did we exclude the $n$ from the first quantification? 
+
+Changing the order of quantifiers can change the proof that we could write: 
+\begin{itemize}
+    \item Another way we could've written this is 
+        $$\forall n \in \mathbb{N}, \forall m, x, y \in \mathbb{N}, 
+        x \equiv y (\text{ mod } m) \Rightarrow x^n \equiv y^n (\text{ mod } m)$$
+        Then we can define $P(n)$ to exclude the $\forall n \in \mathbb{N}$ 
+        portion. 
+    \item By convention, it would not make sense if we partitioned the 
+        the $\forall n \in \mathbb{N}$ and the conditions to define it 
+        as $P (n)$, so it would be best if we wrote it the same way as 
+        we planned to define it 
+\end{itemize}
+
+\ex Prove that for all natural numbers $n$ greater than or equal to 3, 
+$2n + 1 \leq 2^n$.
+
+\textit{Translation.} $\forall n \in \mathbb{N}, n \geq 3 \Rightarrow 2n + 1 
+\leq 2^n$. We can assume the hypothesis is True and prove the conclusion.
+
+\textit{Proof.} Let $n \in \mathbb{N}$, and let $2n + 1 \leq 2^n$ 
+be $P(n)$. We can assume that $P(n)$ is True. WTS $P(0)$ is True, 
+and $P(n+1)$ is True through induction.
+
+\textbf{Base case.} $P(0)$ is $2^0 + 1 \leq 2^0$, which is $2 \leq 1$, 
+thus it is True.
+
+\textbf{Inductive step.} Let $k \in \mathbb{N}$, and $k = n$. We assume 
+$P(k): 2k + 1 \leq 2^k$. WTS $P(k+1)$ is True: $2(k+1) + 1 \leq 2^{k+1}$. 
+\begin{align*}
+    2k + 1 &\leq 2^{k} \\
+    2k + 1 + 2 &\leq 2^k + 2\\
+    2(k+1) + 1 &\leq 2^{k+1}
+\end{align*}
+
+\ex Prove that for all $n \in \mathbb{N}$, if $n \geq 1$. then $2^{2^n}-1$ 
+is divisible by at least $n$ distinct primes.
+
+\textit{Proof.} Let $k \in \mathbb{N}$, then $P(k)$ is 
+$n \geq 1 \implies (Prime(k) \mid 2^{2^k} - 1)$. 
+
+\textbf{Base case.} $P(1)$ is $2^{2^1} - 1 = 3$, which is divisible by 3, 
+thus it is True.
+
+\textbf{Inductive step.} We assume $P(k)$ to be True. WTS $P(k+1)$ is True: 
+$2^{2^{k+1}} - 1$.
+\begin{align*}
+    2^{2^{k+1}} - 1 &= 2 ^{2^{k} \cdot 2 } - 1 \\
+                    &= (2^{2^k} - 1) (2^{2^k} + 1 ) 
+\end{align*}
+We know the left term is True since that is $P(k)$, and the right term 
+is an odd number. The difference between the two numbers is 2, so the gcd 
+must be either 1 or 2, but it cannot be 2 since the right term is odd. Thus 
+the right term introduces a new prime number since the gcd is 1, and proves 
+$P(k+1)$.
+
+\section{Combinatorics}
+\df \textbf{Combinatorics} is an area concerned with counting objects and
+analyzing patterns. A \textbf{pattern} is a sequence of numbers that we 
+often want to derive a closed-form expression for $a_k$ (the $k^{th}$ 
+number in the sequence) or for $\sum_{i=0}^{k} a_i$ (the sum of the first 
+$k+1$ numbers in the sequence).
+
+\ex Consider the following sequence:
+$$0, 1, 1, 2 ,3 , 5, 8, \ldots $$
+Does it look familiar? The \textit{Fibonacci sequence} is a famous pattern of 
+combinatronics: for all $k \geq 2$, $a_k = a_{k-1} + a_{k-2}$.
+
+\ex Another example is the \textit{arithmetic sequence}. Suppose we start 
+with \$20, and we gained \$200 every month. How much money would we 
+have in $k$ months? 
+$$a_0 = 20, a_1 = 220, a_2 = 420, \ldots$$
+We get the sequence of $a_k = 20 + 200k$.\sidenote{This is also $y = mx + b$.}
+
+\ex Suppose we started with \$10, and our money doubled every month. How 
+much would we have in $k$ months? 
+$$a_0 = 10, a_1 = 20, a_2 = 40, \ldots$$
+We get a \textit{geometric sequence} of $a_k = 10 \cdot 2^k$. 
+
+\newpage 
+\ex Suppose we wanted to add all $n \in \mathbb{N}$ up to and including 
+$k$, it would give rise to the following:
+$$a_k = 0 + 1 + \ldots + k$$
+We can express this infinite sequence as a closed form expression 
+$a_n = n \cdot \frac{ (n + 1)}{2}$. 
+
+\subsection{Proofs of closed form expressions}
+\df In general, a \textbf{sequence} is an ordered list of numbers such that 
+$f: \mathbb{N}\rightarrow \mathbb{R} $ where $a(0) = f(0)$ and so on. 
+
+\df A sequence is \textbf{closed form} or \textbf{explicit} when there is a
+fixed number of elementary operations. We can often use induction to prove 
+that an explicit formula computes the terms in a sequence.
+
+For example, the Fibonacci sequence also has an explicit formula called 
+Binet's formula: 
+$$a_n = \frac{(1 + \sqrt{5}) ^n - (1 - \sqrt{5} )^n}{2^n \sqrt{5}}$$
+
+\ex Use induction to prove the first $n$ positive integers is equal to 
+$n \cdot \frac{ ( n - 1)}{2}$
+
+\textit{Translation.} $$\forall n \in \mathbb{N}, \sum_{j=1}^{n} j= n \cdot \frac{ ( n + 1)}{2}
+$$
+
+\textit{Proof.} Let $P(n)$ be $\sum_{j=1}^{n} j= n \cdot \frac{ ( n + 1)}{2}$.
+
+\textbf{Base case.} Let $n  = 0$, then the left is an empty sum, and the 
+right is $0 \cdot \frac{0-1}{2} = 0$. Thus the base case is True.
+
+\textbf{Inductive step.} Let $k \in \mathbb{N}$ and assume that $P(k)$ 
+is True: $\sum_{j=1}^{k} j= k \cdot \frac{ ( k + 1)}{2}$. WTS that
+$P(k+1)$ is True: $\sum_{j=1}^{k+1} j= \frac{(k+1) ( k+ 2)}{2}$.
+\begin{align*}
+    \sum_{j=1}^{k} j&= k \cdot \frac{ ( k + 1)}{2} \\
+    \sum_{j=1}^{k + 1} j &= k \cdot \frac{ ( k+1)}{2} + (k+ 1) \\
+                         &= \frac{ k( k+1)}{2} + \frac{2(k+ 1)}{2} \\
+                         &= \frac{k (k + 1) + 2(k+1 )}{2} \\
+                         &= \frac{ ( k + 1) (k+2)}{2} 
+\end{align*} 
+Since we know that the sum we are expressing is $a_k = 1 + 2 + \ldots 
+k$, to add the $k^{th}$ term is just adding $(k+1)$ to the sum.
+
+\qedsymbol
+\newpage
+\subsection{Strengthening the hypothesis}
+\ex Prove that the sum of the first $n$ odd numbers is a perfect square.
+
+\textit{Translation.} $$\forall n \in \mathbb{N}, \exists x \in \mathbb{N}
+, \sum_{i = 0}^{n - 1} (2i + 1) = x^2
+$$
+
+\textit{Discussion.} To prove the inductive step, we can assume that $P(k)$ 
+is True. But we run into an issue:
+\begin{align*}
+    \sum_{i=0}^{k} (2i + 1) &= x^2 \\
+    \sum_{i=0}^{(k+1)-1} (2i+1) &= x^2 + (2k + 1) 
+\end{align*}
+How can we prove that the $2k + 1$ term adds into the right term to make it
+a perfect square? We can explore examples to learn more: $1^2 = 1$, $2^2 = 
+3 + 1$, $3^3 = 5 + 3 + 1$. We can conjecture that the sum of the first $n$ 
+odd numbers is equal to $n^2$. So, we can make our hypothesis even stronger: 
+$$\forall n \in \mathbb{N}, \sum_{i=1}^{n-1} (2i + 1) = n^2$$
+\textit{Proof.} Let $P(n)$ be the predicate $\sum_{i=1}^{n-1} (2i + 1) = n^2$, 
+we will prove that for all $n \in \mathbb{N}, P(n)$ by induction on $n$.
+
+\textbf{Base case.} Let $n = 0 $, then the left is an empty sum and the right 
+is 0, thus this is True.
+
+\textbf{Inductive step.} Let $k \in \mathbb{N}$, we will assume that $P(k)$ 
+is True: \linebreak $\sum_{i=1}^{k-1} (2i + 1) = k^2$. WTS that $P(k+1)$ is True: 
+$\sum_{i=1}^{k} (2i + 1) = (k+1)^2$.
+\begin{align*}
+    \sum_{i=1}^{k-1} (2i + 1) &= k^2 \\ 
+    \sum_{i=1}^{(k+1)-1} (2i + 1) &= k^2 + (2k + 1)\\ 
+    \sum_{i=1}^{k} (2i + 1) &= k^2 + 2k + 1 \\
+                            &= (k+1)^2
+\end{align*}
+\qedsymbol
+\subsection{Going beyond numbers}
+\ex Prove that for every finite set $S$, $\mid \mathcal{P}(s)\mid = 2^{\mid S \mid }
+$.\sidenote{Recall that $\mathcal{P}$ denotes a power set --- the set of all 
+subsets of $S$}. In other words, a power set of $S$ will have $2^{\mid S \mid} $
+number of subsets.\sidenote{$\mid P(n) \mid$ is the size of a set.}
+
+\textit{Translation.} We can perform induction on a variable representing 
+the size of a set, since the size of a finite set is always a natural number. 
+We can then define a predicate for $n \in \mathbb{N}$:
+$$P(n) : \text{Every set $S$ of size $n$ satisfies }\mid \mathcal{P}(S)\mid 
+= 2^n$$
+Then, our original statement would just be $\forall n \in \mathbb{N}, 
+P(n)$, which means we can use induction.
+
+\textit{Proof.} \textbf{Base case.} Let $n = 0$. The only subset of an empty 
+set is itself, $\mathcal{P} (S) = \{\emptyset\}$, which is size 1, and $2^0 
+= 1$. 
+
+\textbf{Inductive step.} Let $k \in \mathbb{N}$, and assume 
+that $P(k)$ is True. WTS $P(k+1)$ is True. Let $S$ be a set with size $k+1$, 
+and let $s_1, \ldots, s_{k+1}$ be elements of the set, we wanrt to prove that 
+the number of subsets in $S$ is $2^{k+1}$. 
+
+We know that subsets of $S$ that do not contain the last element of $s_{k+1}$ 
+have the size $2^{k+1}$ according to our assumption. 
+
+Now consider subsets \textit{only} including the last element --- this is also 
+$2^{k+1}$ since you simply add $s_{k+1}$ to $2^k$ subsets. 
+
+Thus, $2^k + 2^k = 2^{k+1}$, and concludes the proof. 
+
+\qedsymbol
+
+\ex Prove that for all $n, m \in \mathbb{N}$, and for all sets $A$ and $B$ 
+of size $n$ and $m$, respectively, $\mid A \times B \mid = n \cdot m$.
+
+\textit{Translation.} We can follow the above example, and perform induction 
+on a variable representing the size of a set, and we only need to perform 
+induction on one of them, as they are both natural numbers. We define a 
+predicate for $n \in \mathbb{N}$:
+$$P(n) : \text{Every set $A, B$ of size $n$, $m$ satisfies $\mid A \times 
+B \mid = n \cdot m$}$$
+Then our statement is $\forall n,m \in \mathbb{N}, P(n)$. We will prove for 
+$n$.
+
+\textit{Proof.} \textbf{Base case.} Let $ n = 0 $, then $A$ must be an 
+empty set, and the Cartesian product would be an empty set, which is size 0.
+Thus, $0 = 0 \cdot m$.
+
+\textbf{Inductive step.} Let $k \in \mathbb{N}$ and assume that $P(k)$ holds. 
+WTS $P(k+1)$ is True. We can define $A \times B$ of size $k$ and $m$ 
+respectively as the set $S_k$:
+$$S_k = \{ k_0m_0, 
+k_0m_1, \ldots, k_0m_{m-1}, \ldots k_{k-1}m_0, \ldots k_{k-1} m_{m-1} \} $$
+And let $S_{(k+1)}$ be the set of $ A \times B$ for only $k + 1$ terms and $m$: 
+$$S_{(k+1)} = \{k_km_0 , \ldots, k_k m_{m-1} \}$$
+We can express $\mid S_k \mid$ as $k \cdot m$ since we assumed $P(k)$ to be 
+True, and thus we can express $\mid S_{(k+1)} \mid$ as $m$ since there is only 
+one term of $k + 1$.
+\begin{align*}
+    \mid A \times B \mid &= k \cdot m \\
+                         &= \mid S_k \mid \\
+                         &= \mid S_k \mid + \mid S_{(k+1)} \mid \\
+                         &= k \cdot m + m \\
+                         &= m(k + 1) 
+\end{align*}
+The proof for $m$ is the same, thus $P(k+1)$ is proven for both $k = n$ and 
+$k = m$. 
+
+\qedsymbol
+
+\newpage
+\section{Strong induction}
+\df \textbf{Strong induction} is a technique that assumes the first $n$ terms 
+are all True: $P(0), P(1), \ldots, P(n)$. This is in contrast to \textit{simple
+induction}, which was the previously taught method of assuming only $P(n)$. 
+These are equivalent. Formally, we want to prove that $$\forall n \in \mathbb{N}, 
+n \geq k \Rightarrow P(n)$$
+where $k$ is some natural number. We first prove the base case $P(k)$, then 
+prove that for any fixed but arbitrary $n \geq k $, $P(j)$ for all $j$ where 
+$k \leq j \leq n$ implies $P(n+1)$
+
+\ex Prove that for every integer $n \geq 2$, it can be expressed as a product 
+of one or more prime numbers,\sidenote{Sound familiar? This is the prime 
+factorization theorem.}
+
+\textit{Proof.} Let $P(n)$ be the statement that $n$ can be expressed as a 
+product of one or more prime numbers. 
+
+\textbf{Base case.} Let $n = 2$. 2 can be expressed as itself, which is prime, 
+thus $P(2)$ is True.
+
+\textbf{Inductive step.} Let $n$ be an integer, $n \geq 2$. And assume that for 
+every integer $j$, $2 \leq j \leq n$, that $j$ can be expressed as a product 
+of one or more prime numbers. WTS $P(n+1)$. There are two cases: either 
+integer $n + 1$ is a prime number, or it is not. If it is a prime number, then 
+it is a product of itself, so this case is complete. 
+
+When it is a not a prime number, it is $n + 1 = a \cdot b$, where $a, b $ are 
+positive integers that are both not $n+1$ or $1$. Since $ 2 \leq a \leq n$, 
+and $2 \leq b \leq n$, both $a$ and $b$ can be written as a product of prime 
+numbers by the induction hypothesis, thus the proof is complete.
+
+\qedsymbol
+
+We would not have been able to show this with simple induction, since all 
+we would know is that $P(n)$ can be factorized into primes. 
+
+\end{document} 

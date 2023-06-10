@@ -1,0 +1,160 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{lipsum}
+\usepackage{parskip}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb} 
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{enumitem}
+\title{CSC165H1: Problem Set 1}
+\author{Michael Zi Xi Zhou}
+\date{2023-01-28}
+
+\newcounter{qcount}
+\newcommand\q{\stepcounter{qcount} \textbf{Question \theqcount}. }
+
+\begin{document}
+\maketitle
+
+\q \textbf{Propositional formulas}
+
+\begin{enumerate}[label= (\alph*)]
+    \item $ (\neg p \Leftrightarrow q) \Rightarrow q$ 
+        \begin{enumerate}[label=(\roman*)]
+            \item Truth table. 
+                \begin{center}
+                    \begin{tabular}{| c c c |}
+                \hline 
+                $p$ & $q$ & $(\neg p \Leftrightarrow q) \Rightarrow q$ \\
+                \hline 
+                True & True & True \\
+                True & False & False \\
+                False & True & True \\
+                False & False & True \\
+                \hline
+                    \end{tabular}
+                \end{center}
+            \item Logically equivalent formula.
+                \begin{align*}
+                    (\neg p \Leftrightarrow q) &\Rightarrow q \\
+                    ( ( \neg p \Rightarrow q) \land ( q \Rightarrow \neg p)) 
+                                               &\Rightarrow q \\
+                    ( ( p \lor q ) \land (\neg q \lor \neg p)) &\Rightarrow q \\
+                    \neg ( ( p \lor q ) \land (\neg q \lor \neg p)) &\lor q \\
+                    \neg(p \lor q) \lor \neg ( \neg q \lor \neg p) &\lor q 
+                \end{align*}
+                $$\boxed{ (\neg p \land \neg q) \lor (q \land p) \lor q}$$
+        \end{enumerate}
+    \item $ (p \Rightarrow (q \Rightarrow r)) \Rightarrow ( (p \Rightarrow q) \Rightarrow r)$
+        \begin{enumerate}[label= (\roman*)]
+            \item Truth table.
+                \begin{center}
+                    \begin{tabular}{|c c c c|}                   
+                \hline
+                $p $ & $q$ & $r$ & $(p \Rightarrow (q \Rightarrow r)) \Rightarrow ( (p \Rightarrow q) \Rightarrow r)$\\
+                \hline
+                True & True & True & True \\
+                True & True & False & True \\
+                True & False & True & True \\
+                True & False & False & True \\
+                False & True & True & True \\ 
+                False & True & False & False \\
+                False & False & True & True \\
+                False & False & False & False \\
+                \hline                      
+                    \end{tabular}
+                \end{center}
+            \item Logically equivalent formula.
+                \begin{align*}
+                    (p \Rightarrow (q \Rightarrow r)) &\Rightarrow ( (p \Rightarrow q) \Rightarrow r) \\
+                    \neg(\neg p \lor (\neg q \lor r)) &\lor (\neg (\neg p \lor q) \lor r) \\
+                    (p \land \neg (\neg q \lor r)) &\lor ((p \land \neg q) \lor r) 
+                \end{align*}
+                $$\boxed{(p \land q \land \neg r) \lor ((p \land \neg q )
+                \lor r)}$$
+        \end{enumerate}
+\end{enumerate}
+
+\newpage
+\q \textbf{Translating statements.}
+\begin{enumerate}[label=(\alph*)]
+    \item $\forall s \in S, \: \forall c \in C, \:  CS(s) \Rightarrow \neg Fail(s, c)$ 
+    \item $\exists c \in C, \: \forall s \in S, \: CS(s) \Rightarrow Study(s, c)$
+    \item $\exists s \in S, \: \forall c \in C, \: CS(s) \land \neg Study(s, c)$
+    \item $\forall c \in C, \: \exists s_1 \in S, \: \forall s_2 \in S, \:
+        Study(s_1, c) \land (Study(s_2, c) \Rightarrow s_1 = s_2)$
+    \item $\forall s \in S, \: \exists c_1, c_2 \in C, \: \forall c_3 \in C, \:
+        Study(s, c_1) \land Study(s, c_2) \land c_1 \neq c_2 \land (Study (s, c_3)
+        \Rightarrow (c_3 = c_1 \lor c_3 = c_2)) $
+\end{enumerate}
+
+\newpage
+\q \textbf{Choosing a univserse and predicates}
+\begin{align*}
+    \forall x \in \mathbb{N}, P(x, 165) \lor P(x, 0) \tag*{(Statement 1)} \\
+    (\forall x \in \mathbb{N}, P (x, 165)) \Rightarrow (\exists x \in \mathbb{N}, 
+    P(x, 0 )) \tag*{(Statement 2)}
+\end{align*}
+\begin{enumerate}[label=(\alph*)]
+    \item (Statement 1) is False and (Statement 2) is True when both 
+terms of (Statement 1) are False --- in this case, (Statement 2) will always be 
+True due to the vacuous truth cases for implication operators. So, we can define
+the binary predicate $P$ as the following:
+$$\boxed{P(a, b) : ``b \mid a," \: \text{where } a, b \in \mathbb{N}} $$
+Then (Statement 1) would be False since 165 does not divide all natural 
+numbers, and 0 does not divide all natural numbers. And (Statement 2) 
+would be True since the hypothesis is False from the first term of (Statement 1).
+    \item For both statements to be True, only one term of (Statement 1) has 
+        to be True due to the OR operator, and either the hypothesis of 
+        (Statement 2) has to be False, or both terms have to be True. So, we 
+        can define the binary predicate $P$ as the following:
+        $$\boxed{P(a, b) : ``a \mid b," \: \text{where } a, b \in \mathbb{N}}$$
+        Then (Statement 1) is True since all natural numbers divide 0 ($0 \cdot x = 0$), 
+        and (Statement 2) is True since the hypothesis is False (not all natural numbers 
+        divide 165).
+    \item \begin{align*}
+        \forall x \in S, \Big( \exists y \in T, P(x, y) \Big) \Rightarrow Q(x) \tag*{(Statement 3)}\\
+        \forall x \in S, Q(x) \Rightarrow \Big( \forall y \in T, P(x,y) \Big) \tag*{(Statement 4)}
+    \end{align*}
+    Let's choose $Q$ as the False predicate use it to find $P$. 
+    We will first define the sets $S$ and $T$:
+    \begin{align*}
+        &\boxed{S = \{ x \mid x \in \mathbb{N} \text{ and } 0 \leq x \leq 10 \}} \\
+        &\boxed{T = \{ y \mid y \in \mathbb{N} \text{ and } 5 \mid y \}}
+    \end{align*}
+    If $Q$ is False for $\forall x \in S$, then we can define a predicate $P$ that is 
+    True for at least one $y \in T$, but False for all $y \in T$. This will make (Statement 3)
+    False and (Statement 4) True. We will now define a binary predicate $P$ 
+    that is True for $\forall x \in S$ and $\exists y \in T$, but False for 
+    $\forall x \in S$ and $\forall y \in T$, and a unary predicate $Q$ that is False 
+    in the case of $\forall x \in S$:
+    \begin{align*}
+        &\boxed{P(a, b) : ``10 \mid (a \cdot b)", \text{ where } a \in S \text{ and } b \in T}\\
+        &\boxed{Q(a) : ``3 \mid a," \text{ where } a \in S}
+    \end{align*} 
+    Thus $P$ is True for some but not all $y \in T$ (10 divides 20, but 10 
+    does not divide 15), and $Q$ is False in the case of $\forall x \in S$ 
+    (3 does not divide 2), and they are both not constant functions. (Statement 3)
+    will now be $True \Rightarrow False$, which is False, and (Statement 4) 
+    will be $False \Rightarrow True$, which is True. 
+\end{enumerate}
+
+\newpage
+\q \textbf{Pierre Numbers}
+\begin{enumerate} [label= (\alph*)]
+    \item 
+        $$PierreNumber(n) : \exists k \in \mathbb{Z}, \: n = 2^{2^k} + 1, 
+        \text{ where } n \in \mathbb{N}$$
+    \item $$\forall n \in \mathbb{N}, \: PierreNumber(n) \Rightarrow 
+        (\exists k \in \mathbb{Z}, \: n = 2k + 1)$$
+    \item $$\forall n \in \mathbb{N}, \: \exists p \in \mathbb{N},
+        \: p > n \land PierreNumber (p)$$
+    \item $$\forall n \in \mathbb{N}, \: \exists k \in \mathbb{Z}, \: n = 
+        2^{2^k} + 1 \land k < 5 \Rightarrow Prime(n)$$
+\end{enumerate}
+
+
+\end{document}

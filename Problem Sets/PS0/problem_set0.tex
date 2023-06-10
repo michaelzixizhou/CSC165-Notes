@@ -1,0 +1,97 @@
+% CSC165 Winter 2023: Problem Set 0
+% Template to use to complete Problem Set 0.
+% Note that using this template is *optional*: it provides a nice foundation
+% for getting started with LaTeX, but you aren't required to use it!
+% If you are using Overleaf, you'll want to upload this file to your account.
+% Before modifying this file, we recommend trying to compile it as-is
+% to see what the basic template gives.
+
+\documentclass[12pt]{article}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[margin=2.5cm]{geometry}
+
+% If you want to use this package, make sure to download it from the LaTeX
+% help page on Quercus (and copy to Overleaf, if using)! Then remove the
+% comment indicator % that starts the next line.
+% \usepackage{csc}
+
+% Document metadata
+\title{CSC165H1: Problem Set 0}
+\author{Michael Zi Xi Zhou}
+\date{2023-01-13}
+
+
+% Document starts here
+\begin{document}
+\maketitle
+
+\section*{My Courses}
+
+% Use the environment "itemize" to create an *unordered* list.
+
+\begin{itemize}
+    \item CJH332H1, Cellular and Molecular Neurobiology of the Synapse, Jimmy Fraigne
+    \item CSC148H1, Introduction to Computer Science, Jonathan Calver 
+    \item CSC165H1, Mathematical Expression and Reasoning for Computer Science, Thomas Fairgrieve
+    \item HMB200H1, Introduction to Neuroscience, Paul Whissell 
+    \item IMM250H1, The Immune System and Infectious Disease, Matthew Buechler
+\end{itemize}
+
+\section*{Set notation}
+
+% Fill in the following:
+
+\[
+S_1 \cap S_2 = \{0, 1, 4, 5, 6, 9, 10, 11, 14\}
+\]
+
+
+\section*{A truth table}
+\begin{center}
+\begin{tabular}{| c c c c|}
+\hline
+    $p$ & $q$ & $r$ & $(p \lor q) \Rightarrow (p \Leftrightarrow r)$ \\
+    \hline
+    True & True & True & True \\
+    True & True & False & False \\
+    True & False & True & True \\
+    True & False & False & False \\
+    False & True & True & False \\
+    False & True & False & True \\
+    False & False & True & True \\
+    False & False & False & True \\
+    \hline
+\end{tabular}
+\end{center}
+
+\newpage
+\section*{A calculation}
+
+We will use the arithmetic series formula $\sum_{i=1}^{n-1} (di + k) = 
+nk + \frac{dn (n-1)}{2}$ to simplify the equation. 
+\begin{align*}
+    \sum_{i=0}^{n-1} (2i + 3) &= 3n + \frac{2n(n-1)}{2} \\
+                              &= 3n + \frac{2n^2 - 2n}{2} \\
+                              &= 3n + \frac{2n^2}{2} - \frac{2n}{2} \\
+                              &= 3n + n^2 - n  \\
+                              &= n^2 + 2n \\ 
+\end{align*}
+Finally, we will find the smallest positive integer $n$ such that 
+$n^2 + 2n \geq 165$ using the quadratric formula. 
+\begin{align*}
+    n^2 + 2n &\geq 165 \\
+    n^2 + 2n - 165 &\geq 0 \\
+    n &\geq \frac{-2 \pm \sqrt{2^2 - 4 \cdot 1 \cdot -165}}{2 \cdot 1} \\
+    n &\geq \frac{-2 \pm \sqrt{664}}{2} \\
+    n &\geq \frac{-2 \pm 2\sqrt{166}}{2} \\
+    n &\geq {-1 + \sqrt{166}} \\
+    n &\approx 11.884\\
+    n &= 12 \\
+\end{align*}
+We can remove the negative case and round up to the positive integer 
+$12$ since $n \in \mathbb{Z}^+$, and we take the lowest possible $n$, 
+which is $n = {-1 + \sqrt{166}}$, which is rounded to $n = 12$. 
+
+\end{document}

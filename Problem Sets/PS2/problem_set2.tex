@@ -1,0 +1,284 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{lipsum}
+\usepackage{parskip}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb} 
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{enumitem}
+\title{CSC165H1: Problem Set 2}
+\author{Michael Zhou}
+\date{2023-02-26}
+
+\newcounter{qcount}
+\newcommand\q{\stepcounter{qcount} \textbf{Question \theqcount}. }
+\newcommand\qedsymbol{\hfill$\blacksquare$}                                     
+
+\begin{document}
+\maketitle
+
+\q \textbf{Number theory.}
+
+\begin{enumerate}[label=(\alph*)]
+    \item Prove that $\forall n \in \mathbb{N},$ gcd$(9n+1, 10n+1) = 1$.
+
+        \textit{Proof.} Let $n $ be an arbitrary natural number, 
+        let $r = 10$, and let $s = -9$. We want to prove that for all 
+        natural numbers $n$, gcd$ (9n+1, 10n+1) = 1$. 
+         Using Fact 6 from the Week 4 worksheet, 
+        we can rewrite the statement to $$\forall n \in \mathbb{N}, 
+        \exists r, s \in \mathbb{Z}, r(9n + 1) + s(10n + 1) = 1.$$
+        Substituting $r $ and $s$ into the equation, we get 
+        \begin{align*}
+            10(9n+1) - 9(10n + 1) &= 90n + 10 - 90n - 9 \\
+                                  &= 1 
+        \end{align*}
+        By the definition of gcd$ (a, b)$, the gcd is the smallest postive 
+        integer that can be expressed as a linear combination of $a, b$. 
+        Since 1 is the smallest positive integer, we can conclude that 
+        gcd$(9n + 1, 10n + 1) = 1$. 
+        
+        \qedsymbol
+    \item Prove that $\forall m, n \in \mathbb{Z}, n \mid m \land Prime(n) 
+        \Rightarrow n \nmid (m + 1)$.
+        
+        \textit{Proof.} Let $m, n \in \mathbb{Z}$. Assume $n \mid m \land 
+        Prime(n).$ We want to prove that $n \nmid (m + 1)$. We will use a 
+        proof by contradiction and assume $n \mid (m + 1)$. By the definition 
+        of divisibility, let there be $k_1, k_2 \in \mathbb{Z}$, 
+        such that $k_1n = m $ and $k_2n = m+1$ . Substituting these equations we get 
+        \begin{align*}
+            k_2n &= k_1n + 1 \\
+            k_2n - k_1n &= 1 \\
+            n(k_2 - k_1) &= 1 
+        \end{align*}
+        Then there exists integers $k_1, k_2$ such that $n(k_2 - k_1) = 1$ by 
+        the assumption that $n \mid (m + 1)$. 
+
+        However, the only scenarios when 
+        $n(k_2 - k_1) = 1$ are when $n = 1$ or $n = -1$ since $n$ is an 
+        integer. We know that $n$ is prime, 
+        so $n$ has to be greater than 1 by the definition of $Prime(n)$, 
+        which rules out both $n = -1$ and $n = 1$. Then there does not 
+        exist $k_1, k_2$ such that $n (k_2 - k_1) = 1$, this is a contradiction. 
+
+        The statement $n(k_2 - k_1) = 1$ is both True \textit{and}
+        False by the assumption that $n \mid (m + 1)$. Thus, $n \nmid (m + 1)$ is 
+        True by proof by contradiction when $n$ is Prime and $n \mid m$.
+
+        \qedsymbol
+\end{enumerate}
+
+\newpage 
+\q \textbf{Floors and ceilings.}
+\begin{enumerate}[label=(\alph*)]
+    \item Prove that $\forall x \in \mathbb{Z}, \lceil{\frac{x-1}{2}}\rceil 
+        = \lfloor{\frac{x}{2}}\rfloor$
+    
+        \textit{Proof.} Let $x \in \mathbb{Z}$. We want to prove that 
+        $\lceil{\frac{x-1}{2}}\rceil 
+        = \lfloor{\frac{x}{2}}\rfloor$.
+        
+        We will use a proof by cases for even and odd $x$ terms: 
+
+        \textbf{Case 1.} Assume $x$ is even, such that $x = 2k$ for some integer $k$.
+        \begin{align*}
+            LHS &= \left\lceil \frac{2k -1 }{2} \right\rceil\\
+            &= \left\lceil k - \frac{1}{2} \right\rceil \\
+            &= k
+            \tag*{(1)}\\
+            RHS &= \left\lfloor \frac{2k}{2} \right\rfloor \\
+                &= \left\lfloor k \right\rfloor  \\
+                &= k \\
+            LHS &= RHS = k 
+        \end{align*}
+        (1) By the definition of ceiling, we know that the ceiling of $k - 
+        \frac{1}{2}$ 
+        is the smallest integer that is greater or equal to $k - \frac{1}{2}$, 
+        in this case, it would just be the integer $k$. 
+
+        \textbf{Case 2.} Assume $x$ is odd, such that $x = 2k + 1$ for some 
+        integer $k$. This case is symmetrical to the even case, since when 
+        one side is odd, the other side is even, but here is the proof anyway.
+        \begin{align*}
+            LHS &= \left\lceil \frac{2k + 1 -1}{2}\right\rceil  \\
+                &= \left\lceil k \right\rceil \\
+                &= k \\
+            RHS &= \left\lfloor \frac{2k + 1}{2} \right\rfloor \\
+                &= \left\lfloor k + \frac{1}{2} \right\rfloor 
+                \tag*{(2)}\\
+                &= k \\
+            LHS &= RHS = k
+        \end{align*}
+        (2) By the definition of floor, we know that the floor of $k + 
+        \frac{1}{2}$ is the largest integer less than or or equal to $k + 
+        \frac{1}{2}$, which is the integer $k$ in this case.  
+
+        Thus, we have shown the LHS is equal to the RHS for both 
+        even and odd integers, such that $
+        \left\lceil \frac{x-1}{2} \right\rceil  = 
+        \left\lfloor \frac{x}{2} \right\rfloor$ is True for all $x \in \mathbb{Z}$.
+
+        \qedsymbol
+    \newpage
+    \item \begin{enumerate}[label=(\roman*)]
+        \item Prove that $\forall x \in \mathbb{R}, \left\lceil 
+            x - 1 \right\rceil  = \left\lceil x \right\rceil - 1$.
+        
+            \textit{Proof.} Let $x \in \mathbb{R}$.
+            We want to show that for all real numbers $x$, 
+            $\left\lceil x -1\right\rceil = 
+            \left\lceil x \right\rceil - 1$. 
+
+            We will use a proof by cases for integer and non-integer terms.
+
+            \textbf{Case 1.} Assume $x$ is an integer.
+
+            By the definition of ceiling, we know that the ceiling of 
+            $x$ is the smallest integer bigger or equal to $x$. In other 
+            words, when $x$ is an integer, $\left\lceil x \right\rceil $ 
+            is just $x$. Then we have $\left\lceil x - 1 \right\rceil 
+            = x - 1$ and $\left\lceil x \right\rceil - 1 = x - 1  $. 
+            The left hand side and the right hand side are equal, thus 
+            the statement is True when $x$ is an integer. 
+
+            \textbf{Case 2.} Assume $x$ is not an integer.
+
+            By the definition of ceiling, we can remove the case 
+            where $\left\lceil x - 1 \right\rceil = x - 1$ since $x - 1$ is not
+            an integer, then we know that $x - 1 < \left\lceil x - 1 \right\rceil $, and 
+            $\left\lceil x - 1\right\rceil $ is the smallest integer that satisfies 
+            the inequality. 
+
+           Let $n = \left\lceil x - 1\right\rceil $.  
+            We can now express the ceiling of $x - 1$ as an 
+            inequality:
+            \begin{align*}
+                x -1 &< \left\lceil x -1 \right\rceil\\ 
+                x - 1 &< n   \\
+                x &< n + 1
+            \end{align*}
+            Now we have $x < n + 1$, where $n + 1$ is the smallest integer 
+            that satisfies the inequality, and by the definition of ceiling, $\left\lceil 
+            x\right\rceil = n + 1 $. 
+            
+            Substituting values into the left and right 
+            hand side of the given statement we have 
+            \begin{align*}
+                LHS &= \left\lceil x - 1 \right\rceil \tag*{(By $\left\lceil x - 1
+                \right\rceil = n$)} \\
+                    &= n  \\
+                RHS &= \left\lceil x \right\rceil - 1 \tag*{(By $\left\lceil x 
+                \right\rceil = n + 1 $)}\\
+                    &= (n+1) - 1\\
+                    &= n \\
+                LHS &= RHS = n 
+            \end{align*}
+            Thus we have proven the LHS is equal to the RHS, such that 
+            $\left\lceil x - 1 \right\rceil  = \left\lceil x \right\rceil - 1$ 
+            for all $x \in \mathbb{R}$. 
+
+            \qedsymbol
+
+        \item Prove or disprove that $\forall x, y \in \mathbb{R}, \left\lceil 
+            xy\right\rceil = \left\lceil x \right\rceil \left\lfloor 
+            y\right\rfloor$. 
+            
+            \textit{Proof.} We will disprove the statement by proving the 
+            negation of the statement:
+            $\exists x, y \in \mathbb{R}, \left\lceil xy \right\rceil 
+            \neq \left\lceil x \right\rceil \left\lfloor y \right\rfloor$.
+
+            Let $x = 1$. Let $y = 0.5$. We want to show that $\left\lceil 
+            xy\right\rceil \neq \left\lceil x \right\rceil \left\lfloor y \right\rfloor $.
+            Then the statement becomes 
+            \begin{align*}
+                LHS &= \left\lceil 0.5 \cdot 1\right\rceil \\
+                    &= 1 \\
+            RHS &= \left\lceil 1 \right\rceil \cdot \left\lfloor 0.5 \right\rfloor  \\
+                &= 1 \cdot 0 \\
+                &= 0 \\
+            LHS &\neq RHS 
+            \end{align*}
+            Thus we have proven that there exists a pair of real numbers 
+            $x, y$ such that $\left\lceil xy \right\rceil \neq \left\lceil 
+            x\right\rceil \cdot \left\lfloor y \right\rfloor $. 
+    \end{enumerate}
+    \qedsymbol
+\end{enumerate}
+
+\newpage
+\q \textbf{Induction.}
+\begin{enumerate}[label=(\alph*)]
+    \item Prove that for all natural numbers $n$, $9 \mid 11^n - 2^n$.
+        
+        \textit{Proof.} Let $P(n)$ be the statement $9 \mid 11^n - 2^n $.
+
+        \textbf{Base case.} Let $n = 0$, then $9 \mid 11^0 - 2^0 $, which 
+        evaluates to $9 \mid 0$. By the definition of divisibility, 
+        any number divides 0 since $9 \cdot 0 = 0$, so the base case is True. 
+        
+        \textbf{Inductive step.} Let $k \in \mathbb{N}$. Assume that $P(k):
+        9 \mid 11^k - 2^k$ is True. We want to prove that 
+        $P(k+1)$: $9 \mid 11^{k+1} - 2^{k+1}$ is True. Then by the definition 
+        of divisibility, there exists a $d_1 \in \mathbb{Z}$ such that 
+        $9d_1 = 11^k - 2^k$. Let $d_2 = 11^k + d_1$. We will start off with the right hand side.
+        \begin{align*}
+            11^{k+1} - 2^{k+1} &= 11 \cdot 11^k - 2 \cdot 2^k \\
+                               &= 11 \cdot 11^k - 11^k \cdot 2 + 11^k \cdot 2 - 2 \cdot 2^k\\
+                               &= 11^k (11 - 2) + 2 ( 11 ^k - 2^k)\\
+                               &= 11^k (9) + 2 (9 d_1) \tag*{(By induction hypothesis)} \\
+                               &= 9 (11^k + d_1) \\
+                               &= 9 d_2
+        \end{align*}
+        Then there exists an integer $d_2$ such that $9 d_2 = 11^{k+1} - 2^{k+1}$ by 
+        the assumption of $P(k)$. Using the 
+        definition of divisibility, we get $9 \mid 11^{k+1} - 2^{k+1}$. Thus $9 \mid 11^n - 2^n$ is proven by induction for all $n \in \mathbb{N}$. 
+        
+        \qedsymbol
+    \newpage
+    \item Consider $p_n = 2^{2^n}+1$ for $n \in \mathbb{N}$. 
+        Prove that for all $n \in \mathbb{N}$, $$p_n = \left(\prod_{i=0}^{n-1}
+        p_i \right) + 2$$
+        \textit{Proof.} Let $P(n)$ be the statement $p_n = (\prod_{i=0}^{
+        n-1} p_i) + 2$.
+        
+        \textbf{Base case.} Let $n = 0$, then $n-1 = - 1$. From the definition 
+        of product notation, the right side product will equal 1 since the upper 
+        limit is smaller than the lower limit, so the right hand side will be 1 + 2 = 3. The left 
+        hand side will be $2^{2^0} + 1 = 3$. Both sides are 3, so the base case is True.
+
+        \textbf{Inductive step.} Let $k\in \mathbb{N}$. Assume $P(k)$ is True, such 
+        that $p_k = \left(\prod_{i=0}^{k-1}p_i \right) + 2$. 
+        We want to prove that $P(k+1)$: $p_{k+1} = \left(\prod_{i=0}^{k} p_i \right)+2$ is True. 
+        Using the difference of squares we can expand $p_{k+1} = 2^{2^k+1} + 1 = 
+        (2^{2^k} - 1) (2^{2^k} + 1) + 2$, and then use the assumption that $P(k)$ 
+        is True.
+        \begin{align*} 
+            p_{k+1} &= 2^{2^{k+1}} + 1\\    
+            2^{2^{k+1}} + 1&= (2^{2^k} - 1) (2^{2^k} + 1) + 2 \tag*{(By difference of squares)}\\
+                           &= (2^{2^{k}} - 1)p_k + 2 \tag*{(By definition of $p_k$)}\\ 
+                           &= (2^{2^{k}} + 1 - 2)p_k + 2\\
+                           &= (p_k - 2)p_k + 2 \tag*{(By definition of $p_k$)}\\ 
+                           &= \left[ (\prod_{i=0}^{k-1} p_i) + 2 -2 \right] p_k + 2 \tag*{(By induction hypothesis)}\\ 
+             &= (p_0 \times p_1 \times \ldots \times p_{k-2} 
+             \times p_{k-1}) p_k + 2\\
+             &= (p_0 \times p_1 \times \ldots \times p_{k-2} \times p_{k-1} 
+             \times p_k) + 2 \\
+             &= \left( \prod_{i=0}^{k} p_i \right) + 2  
+        \end{align*}
+        $P(k+1)$ is True by the assumption that $P(k)$ is True. Thus $P(n) : p_n =  
+        \left(\prod_{i=0}^{n-1} p_i \right) + 2 $ is proven True for all $n \in \mathbb{N}$ 
+        by induction.
+
+        \qedsymbol 
+
+
+\end{enumerate} 
+
+
+
+\end{document}
